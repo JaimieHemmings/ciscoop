@@ -1,4 +1,4 @@
-# ciscoop
+# CI/Scoop
 
 # Create Virtual environment
 
