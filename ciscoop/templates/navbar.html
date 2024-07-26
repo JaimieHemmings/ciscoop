@@ -65,6 +65,16 @@
             </svg>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if session['username'] %}
+            <li>
+              <a class="dropdown-item" href="{{ url_for('profile') }}"
+                >Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+            {% else %}
             <li>
               <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
             </li>
@@ -73,10 +83,14 @@
                 >Register</a
               >
             </li>
-            <li><hr class="dropdown-divider" /></li>
+            {% endif %} {% if session['role'] == 'admin' %}
             <li>
-              <a class="dropdown-item" href="#">Logout</a>
+              <hr />
             </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('admin') }}">Admin</a>
+            </li>
+            {% endif %}
           </ul>
         </li>
       </ul>

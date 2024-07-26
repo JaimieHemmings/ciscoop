@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<section class="px-4 py-5 text-center small-hero bg-image">
+  <div class="row">
+    <h1 class="display-5 fw-bold mb-3">
+      Welcome <span class="focus-text">{{user.username}}!</span>
+    </h1>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Profile Information</h2>
+        <ul class="profile-info mt-3">
+          <li class="mb-3">
+            <h3>Username:</h3>
+            <p class="mt-1">{{ user.username }}</p>
+          </li>
+          <li class="mb-3">
+            <h3>Email:</h3>
+            <p class="mt-1">{{ user.email }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

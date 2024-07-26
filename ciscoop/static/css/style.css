@@ -129,7 +129,7 @@ nav {
 
 .index-hero {
   background-image: url('../img/mountains-bg.webp');
-  background-position: top right;
+  background-position: center;
   position: relative;
   height: 80vh;
   display: flex;
@@ -338,4 +338,35 @@ ul.footer-socials li a {
 
 ul.footer-socials li:hover a {
   color: #eb5939;
+}
+
+ul.footer-links {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+ul.footer-links li {
+  margin-top: 1rem;
+}
+
+ul.footer-links li h3 {
+  font-size: 1rem;
+  line-height: 130%;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+ul.footer-links li a {
+  color: #b7ab98;
+  opacity: 0.8;
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+}
+
+ul.footer-links li a:hover {
+  color: #eb5939;
+  opacity: 1;
 }

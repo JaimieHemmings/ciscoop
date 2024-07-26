@@ -21,6 +21,7 @@ class posts(db.Model):
   created = db.Column(db.DateTime, server_default=db.func.now())
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   user = db.relationship('users', backref=db.backref('posts', lazy=True))
+  slug = db.Column(db.String(80), unique=True, nullable=False)
 
   def __repr__(self):
       # return a string representation of the object

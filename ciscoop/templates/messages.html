@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block content %}
+<section class="px-4 py-5 text-center small-hero bg-image">
+  <div class="row">
+    <h1 class="display-5 fw-bold mb-3">
+      Messages <span class="focus-text">for you!</span>
+    </h1>
+  </div>
+</section>
+<section class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="sub-title">Messages</h2>
+      <ul class="message-list mt-3">
+        {% if messages %} {% for message in messages %}
+        <li class="mb-3">
+          <div class="row">
+            <div class="col-6">
+              <h3>{{ message.title }}</h3>
+              <p>Sent by: {{ message.name }}</p>
+              <p>{{ message.email }}</p>
+            </div>
+            <div class="col-6">
+              <p class="mt-1 mb-3">{{ message.content }}</p>
+              <a
+                href="{{ url_for('delete_message', id=message.id) }}"
+                class="btn btn-danger"
+                >Delete</a
+              >
+            </div>
+          </div>
+          <hr />
+        </li>
+        {% endfor %} {% else %}
+        <p>No messages...</p>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

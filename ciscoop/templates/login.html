@@ -1,4 +1,41 @@
 {% extends "base.html" %} {% block content %}
-<h1>Login</h1>
-<p>Login page</p>
-{% endblock %}
+<section class="px-4 py-5 text-center small-hero bg-image">
+  <div class="row">
+    <h1 class="display-5 fw-bold mb-3">
+      Login to your <span class="focus-text">account</span>
+    </h1>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <p class="mb-3">Don't have an account?</p>
+      <a class="btn btn-primary" href="{{ url_for('register') }}">Register</a>
+    </div>
+  </div>
+</section>
+<section class="container">
+  <form method="POST" action="{{ url_for('login') }}">
+    <fieldset>
+      <legend class="sub-title">Login</legend>
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control mb-3"
+        id="username"
+        name="username"
+        placeholder="Enter your username"
+        required
+      />
+      <label for="password" class="form-label mt-3">Password</label>
+      <input
+        type="password"
+        class="form-control mb-3"
+        id="password"
+        name="password"
+        placeholder="Enter your password"
+        required
+      />
+      <button type="submit" class="btn btn-primary mt-3">Login</button>
+    </fieldset>
+  </form>
+  {% endblock %}
+</section>

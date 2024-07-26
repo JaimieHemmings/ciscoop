@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<section class="px-4 py-5 text-center small-hero bg-image">
+  <div class="row">
+    <h1 class="display-5 fw-bold mb-3">
+      Admin <span class="focus-text">Page!</span>
+    </h1>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="sub-title">Messages</h2>
+        <p class="mb-2">You have {{ newMessages }} messages</p>
+        <a href="{{ url_for('messages_page') }}" class="btn btn-primary">View Messages</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <h2>Add a new blog post</h2>
+        <form method="POST" action="{{ url_for('admin') }}">
+          <fieldset>
+            <legend class="sub-title">Add Post</legend>
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              placeholder="Enter a title"
+              minlength="5"
+              maxlength="50"
+              required
+            />
+            <label for="slug" class="form-label mt-3">Slug</label>
+            <input type="text" class="form-control" id="slug" name="slug" placeholder="Enter a slug" minlength="5" maxlength="80" required />
+            <label for="content" class="form-label mt-3">Content</label>
+            <textarea
+              id="content"
+              name="content"
+              class="form-control mb-3"
+              placeholder="Enter your content here!"
+              minlength="10"
+              maxlength="500"
+              required
+            ></textarea>
+            <button type="submit" class="btn btn-primary mt-3">Add Post</button>
+          </fieldset>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
