@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% block content %}
+<section class="px-4 py-5 text-center small-hero bg-image">
+  <h1 class="display-5 fw-bold mb-3" data-text="THIS IS A TEST">
+    Register for an <span class="focus-text">account</span>
+  </h1>
+  <p>Use the form below to sign up for an account</p>
+</section>
+<div class="container">
+  <form method="POST">
+    <fieldset>
+      <legend class="sub-title">Register</legend>
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        name="username"
+        placeholder="Enter a username"
+        minlength="5"
+        maxlength="20"
+        required
+      />
+      <label for="email" class="form-label mt-3">Email Address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        minlength="5"
+        maxlength="50"
+        placeholder="Enter your email address"
+        required
+      />
+      <label for="password" class="form-label mt-3">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="Enter Password"
+        name="password"
+        required
+      />
+      <label for="confirm_password" class="form-label mt-3"
+        >Confirm Password</label
+      >
+      <input
+        type="password"
+        class="form-control mb-3"
+        id="confirm_password"
+        name="confirm_password"
+        placeholder="Confirm Password"
+        required
+      />
+      <a type="submit" class="btn btn-primary mt-3">Register</a>
+    </fieldset>
+  </form>
+  <div class="row mt-5">
+    <div class="col-12">
+      <p class="mb-3">Already have an account?</p>
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
