@@ -2,9 +2,11 @@ from flask import render_template, request, redirect, url_for, flash, session
 from ciscoop import app, db
 from ciscoop.models import users, posts, messages
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import pagination
 
 # Index page
 @app.route('/')
+@app.route('/index')
 def home():
     # Get 3 latest blog posts
     latest_posts = posts.query.order_by(posts.created.desc()).limit(3).all()
@@ -13,9 +15,14 @@ def home():
 # Blog page
 @app.route('/blog')
 def blog():
-    # Get all blog posts in ascending order
-    all_posts = posts.query.order_by(posts.created.asc()).all()
-    return render_template('blog.html', title="Blog", posts=all_posts)
+    # Implement SQLAlchemy pagination for Blog Page
+    page = request.args.get('page', 1, type=int)
+    # Get current page of posts
+    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=5)
+    # Get next and previous page URLs
+    next_url = url_for('blog', page=curr_posts.next_num) if curr_posts.has_next else None
+    prev_url = url_for('blog', page=curr_posts.prev_num) if curr_posts.has_prev else None
+    return render_template('blog.html', title="Blog", posts=curr_posts.items, next_url=next_url, prev_url=prev_url)
 
 # Contact page
 @app.route('/contact', methods=['GET', 'POST'])
@@ -126,6 +133,82 @@ def admin():
     newMessages = len(messageData)
 
     return render_template('admin.html', title="Admin", posts=all_posts, newMessages = newMessages)
+
+# Edit posts list
+@app.route('/profile/admin/edit-posts/', methods=['GET', 'POST'])
+def posts_list():
+    # Get user session
+    user_id = session['user_id']
+    # Check user is logged in
+    if user_id is None:
+        flash("Please login to edit a post.")
+        return redirect(url_for('login'))
+    user = users.query.filter_by(id=user_id).first()
+    # Check user is an admin
+    if user.role != "admin":
+        flash("You do not have permission to access this page.")
+        return redirect(url_for('home'))
+    # Implement SQLAlchemy pagination for Blog Page
+    page = request.args.get('page', 1, type=int)
+    # Get current page of posts
+    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=10)
+    # Get next and previous page URLs
+    next_url = url_for('posts_list', page=curr_posts.next_num) if curr_posts.has_next else None
+    prev_url = url_for('posts_list', page=curr_posts.prev_num) if curr_posts.has_prev else None
+    return render_template('posts-list.html', title="Edit Posts", posts=curr_posts.items, next_url=next_url, prev_url=prev_url)
+
+# Edit Post
+@app.route('/profile/admin/edit-post/<int:id>', methods=['GET', 'POST'])
+def edit_post(id):
+    # Get user session
+    user_id = session['user_id']
+    # Check user is logged in
+    if user_id is None:
+        flash("Please login to edit a post.")
+        return redirect(url_for('login'))
+    user = users.query.filter_by(id=user_id).first()
+    # Check user is an admin
+    if user.role != "admin":
+        flash("You do not have permission to access this page.")
+        return redirect(url_for('home'))
+    # Get post by id
+    post = posts.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        # get form data
+        title = request.form['title']
+        content = request.form['content']
+        slug = title.lower().replace(" ", "-")
+        # update post
+        post.title = title
+        post.content = content
+        post.slug = slug
+        # commit changes
+        db.session.commit()
+        flash("Post updated successfully!")
+        return redirect(url_for('posts_list'))
+    return render_template('edit-post.html', title="Edit Post", post=post)
+
+# Delete Post
+@app.route('/profile/admin/delete-post/<int:id>')
+def delete_post(id):
+    # Get user session
+    user_id = session['user_id']
+    # Check user is logged in
+    if user_id is None:
+        flash("Please login to delete a post.")
+        return redirect(url_for('login'))
+    user = users.query.filter_by(id=user_id).first()
+    # Check user is an admin
+    if user.role != "admin":
+        flash("You do not have permission to access this page.")
+        return redirect(url_for('home'))
+    # Get post by id
+    post = posts.query.filter_by(id=id).first()
+    # Delete post
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post deleted successfully!")
+    return redirect(url_for('posts_list'))
 
 # Messages Page
 @app.route('/admin/messages', methods=['GET', 'POST'])

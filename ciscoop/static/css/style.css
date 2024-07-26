@@ -370,3 +370,21 @@ ul.footer-links li a:hover {
   color: #eb5939;
   opacity: 1;
 }
+
+/* End of Footer Styles */
+
+/* Page Buttons styles */
+
+.page-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+/* End of Page Buttons styles */
+
+.messages-alert {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
