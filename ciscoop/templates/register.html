@@ -6,7 +6,7 @@
   <p>Use the form below to sign up for an account</p>
 </section>
 <div class="container">
-  <form method="POST">
+  <form method="POST" action="{{ url_for('register') }}">
     <fieldset>
       <legend class="sub-title">Register</legend>
       <label for="username" class="form-label">Username</label>
@@ -34,6 +34,7 @@
       <label for="password" class="form-label mt-3">Password</label>
       <input
         type="password"
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
         class="form-control"
         id="password"
         placeholder="Enter Password"
@@ -45,13 +46,14 @@
       >
       <input
         type="password"
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
         class="form-control mb-3"
         id="confirm_password"
         name="confirm_password"
         placeholder="Confirm Password"
         required
       />
-      <a type="submit" class="btn btn-primary mt-3">Register</a>
+      <button type="submit" class="btn btn-primary mt-3">Register</button>
     </fieldset>
   </form>
   <div class="row mt-5">

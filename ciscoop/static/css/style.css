@@ -104,6 +104,7 @@ img {
 /* End of Global Styles */
 
 /* Navbar Styles */
+
 body {
   padding-top: 56px;
   background: #0d0d0d;
@@ -172,6 +173,7 @@ nav {
   position: relative;
   z-index: 2;
 }
+
 /* End of Index Hero styles */
 
 /* About Section styles */

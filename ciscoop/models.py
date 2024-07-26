@@ -4,9 +4,9 @@ class users(db.Model):
   # schema for users model
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(20), unique=True, nullable=False)
-  password = db.Column(db.String(200), unique=True, nullable=False)
+  password = db.Column(db.String(200), unique=False, nullable=False)
   email = db.Column(db.String(50), unique=True, nullable=False)
-  isAdmin = db.Column(db.Boolean, unique=False, nullable=False, server_default='f')
+  role = db.Column(db.String(20), unique=False, nullable=False, default="user")
   created = db.Column(db.DateTime, server_default=db.func.now())
 
   def __repr__(self):
