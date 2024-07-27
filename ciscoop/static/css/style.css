@@ -388,3 +388,16 @@ ul.footer-links li a:hover {
   flex-direction: row;
   justify-content: space-between;
 }
+
+/* CKEditor COntent Styles */
+
+.ck-content img {
+  margin: 1.5rem auto;
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+}
+
+.ck-content p {
+  margin-bottom: 1.5rem;
+}

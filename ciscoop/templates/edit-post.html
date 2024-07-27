@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %}{{ ckeditor.load() }}
 <section class="px-4 py-5 text-center small-hero bg-image">
   <div class="row">
     <h1 class="display-5 fw-bold mb-3">
@@ -22,19 +22,22 @@
         required
         value="{{ post.title }}"
       />
-      <label for="content" class="form-label mt-3">Content</label>
-      <textarea
-        id="content"
-        name="content"
-        class="form-control mb-5"
-        placeholder="Enter your content here!"
-        minlength="10"
-        maxlength="500"
+      <label for="preview" class="form-label">Preview</label>
+      <input
+        type="text"
+        class="form-control"
+        id="preview"
+        name="preview"
+        placeholder="Enter a preview"
+        minlength="5"
+        maxlength="50"
         required
-      >
-{{ post.content }}</textarea
-      >
-      <button type="submit" class="btn btn-primary">Submit Changes</button>
+      />
+      <div class="mb-3">
+        <label for="ckeditor" class="form-label mt-3">Content</label>
+        {{ ckeditor.create() }}
+      </div>
+      <button type="submit " class="btn btn-primary">Submit Changes</button>
     </fieldset>
   </form>
 </section>

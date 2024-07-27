@@ -9,7 +9,7 @@ To create a virtual environment for the project open gitbash or CLI of your choi
 
 Then to run the virtual environment type:
 
-- `\virt\Scripts\Activate`
+- `.\\virt\Scripts\Activate`
 
 This process varies depending on your local development environment and operating system. If the above doesn't work you may need to search for instructions specific to your development environment. Please ensure you have Python installed.
 
@@ -28,3 +28,7 @@ In order to run the migrations you will need to then type the following:
 - `>>> from ciscoop import app, db`
 - `>>> app.app_context().push()`
 - `>>> db.create_all()`
+
+If you need to set the Flask app environment variable simply run the command:
+
+- `$env:FLASK_APP="run.py"`

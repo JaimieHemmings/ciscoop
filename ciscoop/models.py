@@ -18,6 +18,7 @@ class posts(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(80), unique=True, nullable=False)
   content = db.Column(db.Text, unique=False, nullable=False)
+  preview = db.Column(db.String(50), unique=False, nullable=True)
   created = db.Column(db.DateTime, server_default=db.func.now())
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   user = db.relationship('users', backref=db.backref('posts', lazy=True))

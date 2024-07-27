@@ -24,6 +24,14 @@ def blog():
     prev_url = url_for('blog', page=curr_posts.prev_num) if curr_posts.has_prev else None
     return render_template('blog.html', title="Blog", posts=curr_posts.items, next_url=next_url, prev_url=prev_url)
 
+# Individual Blog Posts
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    # Get post by slug
+    post = posts.query.filter_by(slug=slug).first()
+    return render_template('blog-post.html', title="Blog Post", post=post)
+
+
 # Contact page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -117,10 +125,11 @@ def admin():
             return redirect(url_for('home'))
         # get form data
         title = request.form['title']
-        content = request.form['content']
+        content = request.form.get('ckeditor')
         slug = title.lower().replace(" ", "-")
+        preview = request.form['preview']
         # create new post
-        new_post = posts(title=title, content=content, user_id=user_id, slug=slug, user=user)
+        new_post = posts(title=title, content=content, preview=preview, user_id=user_id, slug=slug, user=user)
         # add new post to database
         db.session.add(new_post)
         db.session.commit()
@@ -151,7 +160,7 @@ def posts_list():
     # Implement SQLAlchemy pagination for Blog Page
     page = request.args.get('page', 1, type=int)
     # Get current page of posts
-    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=10)
+    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=5)
     # Get next and previous page URLs
     next_url = url_for('posts_list', page=curr_posts.next_num) if curr_posts.has_next else None
     prev_url = url_for('posts_list', page=curr_posts.prev_num) if curr_posts.has_prev else None
@@ -176,10 +185,12 @@ def edit_post(id):
     if request.method == 'POST':
         # get form data
         title = request.form['title']
-        content = request.form['content']
+        content = request.form.get('ckeditor')
         slug = title.lower().replace(" ", "-")
+        preview = request.form['preview']
         # update post
         post.title = title
+        post.preview = preview
         post.content = content
         post.slug = slug
         # commit changes
