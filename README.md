@@ -31,4 +31,4 @@ In order to run the migrations you will need to then type the following:
 
 If you need to set the Flask app environment variable simply run the command:
 
-- `$env:FLASK_APP="run.py"`
+- `$env:FLASK_APP="app.py"`
