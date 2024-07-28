@@ -12,14 +12,13 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
-database_url = os.environ.get('DATABASE_URL')
-if database_url:
-    parsed_url = make_url(database_url)
-    if parsed_url.drivername == 'postgres':
-        parsed_url.drivername = 'postgresql'
-    SQLALCHEMY_DATABASE_URI = str(parsed_url)
-else:
+if os.environ.get("DEVELOPMENT") == "True":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+else:
+    uri = os.environ.get("DATABASE_URL")
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
