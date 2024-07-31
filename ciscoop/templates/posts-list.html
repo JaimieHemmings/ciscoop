@@ -18,7 +18,7 @@
               <div class="col-6">
                 <h3 class="pt-3">{{ post.title }}</h3>
                 <p class="mt-1 mb-3">
-                  {{ post.content|truncate(50,true,'...') }}
+                  {{ post.content|truncate(50,true,'...')|safe }}
                 </p>
               </div>
               <div class="col-6">
