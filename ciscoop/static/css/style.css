@@ -401,3 +401,88 @@ ul.footer-links li a:hover {
 .ck-content p {
   margin-bottom: 1.5rem;
 }
+
+/* End of CKEditor COntent Styles */
+
+/* Mobile Styles */
+
+@media (max-width: 768px) {
+  .about {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .index-hero p,
+  .about p {
+    font-size: 3rem;
+    line-height: 90%;
+  }
+
+  .experience p {
+    font-size: 2rem;
+    line-height: 90%;
+  }
+
+  .experience {
+    background-position: 80%;
+  }
+
+  .skills ul {
+    border-top: 1px solid #eb5939;
+  }
+
+  .skills ul li:after {
+    background-color: #b7ab98;
+  }
+
+  .skills ul li {
+    border-bottom: 1px solid #eb5939;
+  }
+
+  .skills ul li p {
+    font-size: 1rem;
+  }
+
+  .skills ul li p.small {
+    font-size: 0.875rem;
+    padding-top: 1.1rem;
+    opacity: 1;
+  }
+
+  .skills p.small span {
+    color: #eb5939;
+  }
+
+  .skills ul li:after {
+    top: 0;
+    height: 100%;
+  }
+
+  .skills ul li p {
+    color: #0d0d0d;
+  }
+
+  ul.footer-socials li {
+    padding-left: 20px;
+    margin: 0;
+    padding-bottom: 15px;
+  }
+
+  ul.footer-socials li a {
+    font-size: 1rem;
+  }
+
+  ul.footer-socials li::after {
+    top: 5px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #eb5939;
+  }
+}
+
+@media (max-width: 576px) {
+  .index-hero p,
+  .about p {
+    font-size: 2rem;
+  }
+}

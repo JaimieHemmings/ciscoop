@@ -31,11 +31,12 @@
         placeholder="Enter a preview"
         minlength="5"
         maxlength="50"
+        value="{{ post.preview }}"
         required
       />
       <div class="mb-3">
         <label for="ckeditor" class="form-label mt-3">Content</label>
-        {{ ckeditor.create() }}
+        {{ ckeditor.create(value=post.content) }}
       </div>
       <button type="submit " class="btn btn-primary">Submit Changes</button>
     </fieldset>
