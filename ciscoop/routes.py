@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from ciscoop import app, db
-from ciscoop.models import users, posts, messages
+from ciscoop.models import User, Post, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import pagination
 
@@ -9,7 +9,7 @@ from flask_sqlalchemy import pagination
 @app.route('/index')
 def home():
     # Get 3 latest blog posts
-    latest_posts = posts.query.order_by(posts.created.desc()).limit(3).all()
+    latest_posts = Post.query.order_by(Post.created.desc()).limit(3).all()
     return render_template('index.html', title = "Home", posts = latest_posts)
 
 # Blog page
@@ -18,7 +18,7 @@ def blog():
     # Implement SQLAlchemy pagination for Blog Page
     page = request.args.get('page', 1, type=int)
     # Get current page of posts
-    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=5)
+    curr_posts = Post.query.order_by(Post.created.desc()).paginate(page=page, per_page=5)
     # Get next and previous page URLs
     next_url = url_for('blog', page=curr_posts.next_num) if curr_posts.has_next else None
     prev_url = url_for('blog', page=curr_posts.prev_num) if curr_posts.has_prev else None
@@ -28,7 +28,7 @@ def blog():
 @app.route('/blog/<slug>')
 def blog_post(slug):
     # Get post by slug
-    post = posts.query.filter_by(slug=slug).first()
+    post = Post.query.filter_by(slug=slug).first()
     return render_template('blog-post.html', title="Blog Post", post=post)
 
 
@@ -42,7 +42,7 @@ def contact():
         title = request.form['title']
         message = request.form['message']
         # create new message
-        new_message = messages(name=name, email=email, content=message, title=title)
+        new_message = Message(name=name, email=email, content=message, title=title)
         # add new message to database
         db.session.add(new_message)
         db.session.commit()
@@ -58,7 +58,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # Check if user exists
-        user = users.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
         # Check if password matches
         if user and check_password_hash(user.password, password):
             # Create session with user id
@@ -82,7 +82,7 @@ def register():
         confirm_password = request.form['confirm_password']
         email = request.form['email']
         # Chek if user already exists
-        user = users.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             flash("Username already exists. Please try again.")
             return redirect(url_for('register'))
@@ -91,7 +91,7 @@ def register():
             flash("Passwords do not match. Please try again.")
             return redirect(url_for('register'))
         # create new user
-        new_user = users(username=username, password=generate_password_hash(password), email=email, role="user")
+        new_user = User(username=username, password=generate_password_hash(password), email=email, role="user")
         # add new user to database
         db.session.add(new_user)
         db.session.commit()
@@ -105,7 +105,7 @@ def register():
 def profile():
     # Get user session
     user_id = session['user_id']
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html', title="Profile", user=user)
 
 # Admin Page
@@ -118,7 +118,7 @@ def admin():
         if user_id is None:
             flash("Please login to create a post.")
             return redirect(url_for('login'))
-        user = users.query.filter_by(id=user_id).first()
+        user = User.query.filter_by(id=user_id).first()
         # Check user is an admin
         if user.role != "admin":
             flash("You do not have permission to access this page.")
@@ -129,16 +129,16 @@ def admin():
         slug = title.lower().replace(" ", "-")
         preview = request.form['preview']
         # create new post
-        new_post = posts(title=title, content=content, preview=preview, user_id=user_id, slug=slug, user=user)
+        new_post = Post(title=title, content=content, preview=preview, user_id=user_id, slug=slug, user=user)
         # add new post to database
         db.session.add(new_post)
         db.session.commit()
         flash("Post created successfully!")
         return redirect(url_for('admin'))
     # Get all blog posts
-    all_posts = posts.query.all()
+    all_posts = Post.query.all()
     
-    messageData = messages.query.all()
+    messageData = Message.query.all()
     newMessages = len(messageData)
 
     return render_template('admin.html', title="Admin", posts=all_posts, newMessages = newMessages)
@@ -152,7 +152,7 @@ def posts_list():
     if user_id is None:
         flash("Please login to edit a post.")
         return redirect(url_for('login'))
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
@@ -160,7 +160,7 @@ def posts_list():
     # Implement SQLAlchemy pagination for Blog Page
     page = request.args.get('page', 1, type=int)
     # Get current page of posts
-    curr_posts = posts.query.order_by(posts.created.desc()).paginate(page=page, per_page=5)
+    curr_posts = Post.query.order_by(Post.created.desc()).paginate(page=page, per_page=5)
     # Get next and previous page URLs
     next_url = url_for('posts_list', page=curr_posts.next_num) if curr_posts.has_next else None
     prev_url = url_for('posts_list', page=curr_posts.prev_num) if curr_posts.has_prev else None
@@ -175,13 +175,13 @@ def edit_post(id):
     if user_id is None:
         flash("Please login to edit a post.")
         return redirect(url_for('login'))
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
     # Get post by id
-    post = posts.query.filter_by(id=id).first()
+    post = Post.query.filter_by(id=id).first()
     if request.method == 'POST':
         # get form data
         title = request.form['title']
@@ -208,13 +208,13 @@ def delete_post(id):
     if user_id is None:
         flash("Please login to delete a post.")
         return redirect(url_for('login'))
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
     # Get post by id
-    post = posts.query.filter_by(id=id).first()
+    post = Post.query.filter_by(id=id).first()
     # Delete post
     db.session.delete(post)
     db.session.commit()
@@ -230,13 +230,13 @@ def messages_page():
     if user_id is None:
         flash("Please login to view messages.")
         return redirect(url_for('login'))
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
     # Get all messages
-    messageData = messages.query.all()
+    messageData = Message.query.all()
     return render_template('messages.html', title="Messages", messages=messageData)
 
 # Delete Message
@@ -248,13 +248,13 @@ def delete_message(id):
     if user_id is None:
         flash("Please login to delete a message.")
         return redirect(url_for('login'))
-    user = users.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
     # Get message by id
-    message = messages.query.filter_by(id=id).first()
+    message = Message.query.filter_by(id=id).first()
     # Delete message
     db.session.delete(message)
     db.session.commit()

@@ -261,13 +261,15 @@ nav {
 /* Experience Section Styles */
 
 .experience {
-  height: 100vh;
+  min-height: 100vh;
   background-image: url('../img/black-white-profile.webp');
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .experience:after {
@@ -402,6 +404,16 @@ ul.footer-links li a:hover {
   margin-bottom: 1.5rem;
 }
 
+.ck-content h2,
+.ck-content h3,
+.ck-content ul {
+  margin-bottom: 2rem;
+}
+
+.ck-content ul li {
+  margin-bottom: 1rem;
+}
+
 /* End of CKEditor COntent Styles */
 
 /* Mobile Styles */
@@ -486,3 +498,104 @@ ul.footer-links li a:hover {
     font-size: 2rem;
   }
 }
+
+/* Styles for Blog Section of Homepage */
+
+.home-blog {
+  margin-bottom: 5rem;
+}
+
+.home-blog .card {
+  background-color: #b7ab98;
+}
+
+.home-blog .card h3 {
+  color: #eb5939;
+  color: #0d0d0d;
+}
+
+.home-blog .card-title {
+  min-height: 50px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eb5939;
+}
+
+.home-blog .card-body p {
+  padding-top: 15px;
+}
+
+.home-blog .card-body p {
+  min-height: 65px;
+  margin-bottom: 2rem;
+}
+
+.home-blog .card-body a {
+  display: block;
+  margin-top: 1rem;
+}
+
+.home-blog .card-body .card-footer {
+  padding: 0;
+  border: none;
+}
+
+.home-blog .card-footer a {
+  position: relative;
+  z-index: 2;
+}
+
+.home-blog .card-footer a:after {
+  border-top: 15px solid #eb5939;
+  border-bottom: 15px solid transparent;
+  border-right: 15px solid transparent;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.home-blog .card-footer a:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background-color: #eb5939;
+  transform: translate(0, -50%);
+  transition: all 0.3s ease-out;
+  z-index: -1;
+}
+
+.home-blog .card-footer a:hover {
+  background-color: transparent;
+}
+
+.home-blog .card-footer a:hover:before {
+  height: 100%;
+}
+
+.home-blog .card-footer a:hover:after {
+  opacity: 0;
+}
+
+@media (max-width: 1199px) {
+  .home-blog .card h3 {
+    min-height: 120px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-blog .card h3 {
+    min-height: 162px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-blog .card h3 {
+    min-height: unset;
+  }
+}
+
+/* End of Styles for Blog Section of Homepage */

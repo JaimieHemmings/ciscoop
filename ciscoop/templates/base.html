@@ -3,11 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% if title %}
-    <title>CI/Scoop - {{ title }}</title>
-    {% else %}
-    <title>CIScoop</title>
-    {% endif %}
+    
+    <title>CI/Scoop{% if title %} - {{ title }}{% endif %}</title>
+    
     
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <meta name="msapplication-TileColor" content="#da532c">

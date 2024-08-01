@@ -1,7 +1,7 @@
 from ciscoop import db
 
-class users(db.Model):
-  # schema for users model
+class User(db.Model):
+  # schema for User model
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(20), unique=True, nullable=False)
   password = db.Column(db.String(200), unique=False, nullable=False)
@@ -13,23 +13,23 @@ class users(db.Model):
       # return a string representation of the object
       return '<User %r>' % self.username
   
-class posts(db.Model):
-  # schema for posts model
+class Post(db.Model):
+  # schema for Post model
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(80), unique=True, nullable=False)
   content = db.Column(db.Text, unique=False, nullable=False)
   preview = db.Column(db.String(50), unique=False, nullable=True)
   created = db.Column(db.DateTime, server_default=db.func.now())
-  user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-  user = db.relationship('users', backref=db.backref('posts', lazy=True))
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  user = db.relationship('User', backref=db.backref('Post', lazy=True))
   slug = db.Column(db.String(80), unique=True, nullable=False)
 
   def __repr__(self):
       # return a string representation of the object
       return '<Post %r>' % self.title
   
-class messages(db.Model):
-  # schema for messages model
+class Message(db.Model):
+  # schema for Message model
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(80), unique=False, nullable=False)
   email = db.Column(db.String(120), unique=False, nullable=False)
