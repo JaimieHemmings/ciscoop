@@ -29,6 +29,10 @@ def blog():
 def blog_post(slug):
     # Get post by slug
     post = Post.query.filter_by(slug=slug).first()
+    # Check if post exists
+    if post is None:
+        # Return 404 page
+        return render_template('404.html', title="Uh oh! Error: 404"), 404
     return render_template('blog-post.html', title="Blog Post", post=post)
 
 
@@ -81,7 +85,7 @@ def register():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         email = request.form['email']
-        # Chek if user already exists
+        # Check if user already exists
         user = User.query.filter_by(username=username).first()
         if user:
             flash("Username already exists. Please try again.")

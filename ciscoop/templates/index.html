@@ -95,7 +95,7 @@
       <h2 class="sub-title">LATEST BLOG POSTS</h2>
     </div>
     <div class="row">
-      {% for post in posts %}
+      {% if posts %} {% for post in posts %}
       <div class="col-md-4 mt-3 text-center">
         <div class="card">
           <div class="card-body">
@@ -111,7 +111,11 @@
           </div>
         </div>
       </div>
-      {% endfor %}
+      {% endfor %} {% else %}
+      <div class="col">
+        <p>No posts to show</p>
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -122,9 +126,9 @@
         <h2 class="sub-title">EXPERIENCE</h2>
         <p>
           Years of experience
-          <span class="focus-text"
-            >designing full fledged web applications</span
-          >
+          <span class="focus-text">
+            designing full fledged web applications
+          </span>
           in a variety of technologies including JavaScript, Python, React,
           Next.JS, Django
         </p>
