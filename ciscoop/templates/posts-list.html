@@ -13,15 +13,13 @@
         <h2 class="sub-title">Blog Posts</h2>
         <ul class="blog-list mt-3">
           {% for post in posts %}
-          <li class="mb-3">
+          <li class="p-2 mt-1 mb-1">
             <div class="row">
-              <div class="col-6">
-                <h3 class="pt-3">{{ post.title }}</h3>
-                <p class="mt-1 mb-3">
-                  {{ post.content|truncate(50,true,'...')|safe }}
-                </p>
+              <div class="col-8 pt-2 pb-5">
+                <h3 class="pt-3 mb-3">{{ post.title }}</h3>
+                {{ post.content|truncate(50,true,'...')|safe }}
               </div>
-              <div class="col-6">
+              <div class="col-4 d-flex flex-column justify-content-center">
                 <a
                   href="{{ url_for('edit_post', id=post.id) }}"
                   class="btn btn-primary mb-3"
@@ -29,12 +27,11 @@
                 >
                 <a
                   href="{{ url_for('delete_post', id=post.id) }}"
-                  class="btn btn-danger mb-3"
+                  class="btn btn-danger"
                   >Delete Post</a
                 >
               </div>
             </div>
-            <hr />
           </li>
           {% endfor %}
         </ul>

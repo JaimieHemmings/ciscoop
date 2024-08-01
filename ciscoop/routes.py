@@ -107,6 +107,10 @@ def register():
 # Profile page
 @app.route('/profile')
 def profile():
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -115,13 +119,13 @@ def profile():
 # Admin Page
 @app.route('/profile/admin', methods=['GET', 'POST'])
 def admin():
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     if request.method == 'POST':
         # Get user session
         user_id = session['user_id']
-        # Check user is logged in
-        if user_id is None:
-            flash("Please login to create a post.")
-            return redirect(url_for('login'))
         user = User.query.filter_by(id=user_id).first()
         # Check user is an admin
         if user.role != "admin":
@@ -150,12 +154,12 @@ def admin():
 # Edit posts list
 @app.route('/profile/admin/edit-posts/', methods=['GET', 'POST'])
 def posts_list():
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
-    # Check user is logged in
-    if user_id is None:
-        flash("Please login to edit a post.")
-        return redirect(url_for('login'))
     user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
@@ -173,12 +177,12 @@ def posts_list():
 # Edit Post
 @app.route('/profile/admin/edit-post/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
-    # Check user is logged in
-    if user_id is None:
-        flash("Please login to edit a post.")
-        return redirect(url_for('login'))
     user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
@@ -206,12 +210,12 @@ def edit_post(id):
 # Delete Post
 @app.route('/profile/admin/delete-post/<int:id>')
 def delete_post(id):
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
-    # Check user is logged in
-    if user_id is None:
-        flash("Please login to delete a post.")
-        return redirect(url_for('login'))
     user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
@@ -228,12 +232,12 @@ def delete_post(id):
 # Messages Page
 @app.route('/admin/messages', methods=['GET', 'POST'])
 def messages_page():
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
-    # Check user is logged in
-    if user_id is None:
-        flash("Please login to view messages.")
-        return redirect(url_for('login'))
     user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":
@@ -246,12 +250,12 @@ def messages_page():
 # Delete Message
 @app.route('/admin/messages/delete/<int:id>')
 def delete_message(id):
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
-    # Check user is logged in
-    if user_id is None:
-        flash("Please login to delete a message.")
-        return redirect(url_for('login'))
     user = User.query.filter_by(id=user_id).first()
     # Check user is an admin
     if user.role != "admin":

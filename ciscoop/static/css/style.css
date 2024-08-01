@@ -101,6 +101,24 @@ img {
   z-index: 2;
 }
 
+.btn-danger {
+  background-color: #eb5939;
+  border: none;
+  transition: background-color 0.3s ease-out;
+  color: #0d0d0d;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  transition: all 0.3s ease-out;
+}
+
+.btn-danger:hover {
+  background-color: #b7ab98;
+  color: #eb5939;
+}
+
 /* End of Global Styles */
 
 /* Navbar Styles */
@@ -545,12 +563,15 @@ ul.footer-links li a:hover {
 }
 
 .home-blog .card-footer a:after {
-  border-top: 15px solid #eb5939;
-  border-bottom: 15px solid transparent;
-  border-right: 15px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #eb5939;
+  transform: rotate(45deg);
   content: '';
+  width: 15px;
+  height: 15px;
   position: absolute;
-  left: 0;
+  left: 15px;
   top: 0;
   transition: opacity 0.3s ease-out;
 }

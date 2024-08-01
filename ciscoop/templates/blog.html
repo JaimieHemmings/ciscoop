@@ -12,8 +12,8 @@
       <div class="col-12">
         <h2 class="sub-title">Blog Posts</h2>
         <ul class="blog-list mt-3">
-          {% for post in posts %}
-          <li class="mb-3">
+          {% if posts %} {% for post in posts %}
+          <li>
             <div class="row">
               <div class="col-sm-8">
                 <h3>{{ post.title }}</h3>
@@ -30,7 +30,13 @@
               </div>
             </div>
           </li>
-          {% endfor %}
+          {% endfor %} {% else %}
+          <div class="row">
+            <div class="col">
+              <p>No posts to show</p>
+            </div>
+          </div>
+          {% endif %}
         </ul>
       </div>
     </div>
