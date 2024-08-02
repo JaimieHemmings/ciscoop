@@ -18,4 +18,4 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from ciscoop import routes
+from ciscoop import routes  # noqa
