@@ -1,5 +1,9 @@
 # CI/Scoop
 
+CI/Scoop was developed as for me as a developer to share my thoughts, opinions and projects. Users are able to register an account and send messages to me using the form on the contact page. As an admin of the site I am able to Create, Edit and Delete blog posts. The website employs a feature rich content editor for use with writing blog posts allowing the use of font sizing, italics, bold fonts, lists, externally hosted images etc.
+
+![Preview of Website](documentation/img/preview.jpg)
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
