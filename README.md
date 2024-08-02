@@ -4,6 +4,8 @@ CI/Scoop was developed as for me as a developer to share my thoughts, opinions a
 
 ![Preview of Website](documentation/img/preview.jpg)
 
+View the website [here](https://ciscoop-46d70b5281a0.herokuapp.com/).
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:

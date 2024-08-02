@@ -11,8 +11,6 @@ app = Flask(__name__)
 # Add CKEditor
 ckeditor = CKEditor(app)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-
-database_url = os.environ.get('DB_URL')
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 
 db = SQLAlchemy(app)
