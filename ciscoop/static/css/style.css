@@ -119,6 +119,11 @@ img {
   color: #eb5939;
 }
 
+.hide {
+  display: none;
+  pointer-events: none;
+}
+
 /* End of Global Styles */
 
 /* Navbar Styles */
@@ -631,4 +636,21 @@ ul.footer-links li a:hover {
 
 .blog-list li:nth-last-child(1) {
   border-bottom: none;
+}
+
+/* End of Styles for Blog Page */
+
+/* Admin styles */
+
+.delete-confirm {
+  background: #0d0d0d;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.delete-confirm p {
+  margin-bottom: 1rem;
 }

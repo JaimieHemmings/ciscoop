@@ -34,6 +34,14 @@
           id="email"
           class="form-control"
           placeholder="Your email"
+          {%
+          if
+          user_email
+          %}
+          value="{{ user_email }}"
+          {%
+          endif
+          %}
           minlength="5"
           maxlength="50"
           required
@@ -56,7 +64,7 @@
           class="form-control mb-3"
           placeholder="Enter your message here!"
           minlength="10"
-          maxlength="500"
+          maxlength="280"
           required
         ></textarea>
         <button type="submit" class="btn btn-primary mt-3">

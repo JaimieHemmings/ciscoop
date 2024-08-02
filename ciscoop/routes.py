@@ -3,6 +3,7 @@ from ciscoop import app, db
 from ciscoop.models import User, Post, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import pagination
+import re
 
 # Index page
 @app.route('/')
@@ -39,12 +40,37 @@ def blog_post(slug):
 # Contact page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+
+    # If the user is logged in set the form email value to the user's email
+    if 'user_id' in session:
+        user_id = session['user_id']
+        user = User.query.filter_by(id=user_id).first()
+        user_email = user.email
+    
     if request.method == 'POST':
         # get form data
         name = request.form['name']
         email = request.form['email']
         title = request.form['title']
         message = request.form['message']
+        # Validate Form Data
+        if len(name) < 2:
+            flash("Your name is too short to be valid.")
+            return redirect(url_for('contact'))
+        if len(email) < 5:
+            flash("Your email is too short to be valid.")
+            return redirect(url_for('contact'))
+        else:
+            if not re.match(regex, email):
+                flash("Invalid email address. Please try again.")
+                return redirect(url_for('contact'))
+        if len(title) < 3:
+            flash("The title must be longer than 3 characters.")
+            return redirect(url_for('contact'))
+        if len(message) < 5 or len(message) > 280:
+            flash("Message must be greater than 5 characters and less than 280 characters.")
+            return redirect(url_for('contact'))
         # create new message
         new_message = Message(name=name, email=email, content=message, title=title)
         # add new message to database
@@ -52,7 +78,7 @@ def contact():
         db.session.commit()
         flash("Message sent successfully!")
         return redirect(url_for('contact'))
-    return render_template('contact.html', title="Contact")
+    return render_template('contact.html', title="Contact", user_email = user_email)
 
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -136,6 +162,16 @@ def admin():
         content = request.form.get('ckeditor')
         slug = title.lower().replace(" ", "-")
         preview = request.form['preview']
+        # Validate data from form
+        if len(title) < 3:
+            flash("Please create a more descriptive title")
+            return redirect(url_for('admin'))
+        if len(content) < 100:
+            flash("A blog post needs to be longer than 100 characters")
+            return redirect(url_for('admin'))
+        if len(preview) < 5:
+            flash("Please create a more descriptive preview string")
+            return redirect(url_for('admin'))
         # create new post
         new_post = Post(title=title, content=content, preview=preview, user_id=user_id, slug=slug, user=user)
         # add new post to database
@@ -279,9 +315,9 @@ def logout():
 # Invalid URL
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html', title="Uh oh! Error: 404"), 404
+    return render_template('404.html', title="Uh oh! Error: 404", error_message=e), 404
 
 # Internal Server Error
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html', title="Uh oh! Error: 500"), 500
+    return render_template('500.html', title="Uh oh! Error: 500", error_message=e), 500
