@@ -102,6 +102,15 @@ When planning the scope of the project I created a Viability Analysis of the fea
 
 Based on the premise of creating a minimally viable product I have decided to focus on implementing only the core functionality for the application to meet the minimum required specifications for functionality. This means on the initial development sprint I will be implementing features 1, 2, 3, 4, 5 and 12.
 
+### Functionality Requirements
+
+- Clean and thematically cohesive design
+- Functional and aesthetic presentation of blog posts
+- Login/logout functionality
+- Full CRUD functionality
+- Defensive programming usage to safeguard the database from malicious or erroneous input
+- Appropriate handling of error messages
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
