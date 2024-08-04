@@ -199,17 +199,17 @@ A breakdown of the various elements and their implementation across the website.
 
 Below is a table of CRUD functionality for each relevant page:
 
-| Page            | C                                         | R                          | U                               | D                 |
-| --------------- | ----------------------------------------- | -------------------------- | ------------------------------- | ----------------- |
-| Home            |                                           | Fetch 3 latest blog posts  |                                 |                   |
-| Blog            |                                           | Fetch paginated blog posts |                                 |                   |
-| Contact         | Submit Message                            |                            |                                 |                   |
-| Admin           | Create Blog Posts                         |                            |                                 |                   |
-| Edit Post       |                                           |                            | Edit specific blog post content |                   |
-| Blog Management |                                           |                            |                                 | Delete Blog Posts |
-| View Messages   | Read messages submitted from contact page |                            |                                 | Delete Messages   |
-| Login           |                                           | Check password hash        |                                 |                   |
-| Register        | User profile                              |                            |                                 |                   |
+| Page            | C                 | R                                         | U                               | D                 |
+| --------------- | ----------------- | ----------------------------------------- | ------------------------------- | ----------------- |
+| Home            |                   | Fetch 3 latest blog posts                 |                                 |                   |
+| Blog            |                   | Fetch paginated blog posts                |                                 |                   |
+| Contact         | Submit Message    |                                           |                                 |                   |
+| Admin           | Create Blog Posts |                                           |                                 |                   |
+| Edit Post       |                   |                                           | Edit specific blog post content |                   |
+| Blog Management |                   |                                           |                                 | Delete Blog Posts |
+| View Messages   |                   | Read messages submitted from contact page |                                 | Delete Messages   |
+| Login           |                   | Check password hash                       |                                 |                   |
+| Register        | User profile      |                                           |                                 |                   |
 
 ## Defensive Programming
 
@@ -257,7 +257,53 @@ I have implemented the following handlers in order to catch and gracefully redir
 - Allow user comments on blog posts
 - Provide a user interface for the moderating of ragistered users
 
-# Create Virtual environment
+# Testing
+
+Comprehensive testing documentation can be found in the testing document.
+
+# Bugs, Issues and Solutions
+
+# Deployment and Local Development
+
+## Deployment to Heroku
+
+The project is deployed to Heroku from this repository, therefore the deployed version of the site is always up to date with this repository and the deployed code is the exact code as in this repository.
+
+In order to clone this project follow the steps below (May vary depending on your development environment):
+
+- Create a local Clone of this repository from GitHub
+- Run `pip install -r requirements.txt`
+- Log in to Heroku and create a new app and name it as required
+- Choose your closest region for deployment
+- Still in Heroku, navigate to deploy and select GithHub, then select your cloned repository and click "connect".
+- Navigate to the Settings tab and set up your environment variables using the [env.py.example](env.py.example) for reference
+- Then return to the Deploy section of the App in Heroku and enable automatic deploys.
+- Click on the "Deploy Branch" option.
+- It will take a few minutes to deploy, then you can click on "Open App" once it is complete.
+
+## Cloning the Repo
+
+In order to fork the repo, follow these steps:
+
+- Locate the repository
+- Click the button labelled "Code" to the top right of the screen
+- Click HTTPS and copy the link provided
+- In your local environment navigate to the desired directory
+- Open a terminal and type "git clone repository-url"
+- Press enter to begin the cloning process
+
+## Forking the Repo
+
+- Locate the repository on GitHub
+- Click Fork in the top right corner
+- If necassary, select the owner for the forked code under the Owner dropdown menu.
+- Optionally, edit the Repository Name field to rename your forked repository
+- Optionally, use the Description field to input a description of your fork
+- Select "Copy the DEFAULT branch only"
+  - This is another optional step, many scenarios only require a fork of the default branch. If you do not select this you will copy all branches into your fork
+- Click Create Fork
+
+## Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
 
@@ -270,7 +316,7 @@ Then to run the virtual environment type:
 
 This process varies depending on your local development environment and operating system. If the above doesn't work you may need to search for instructions specific to your development environment. Please ensure you have Python installed.
 
-# Create and migrate Database
+## Create and migrate Database
 
 To create the database enter the CLI and type:
 
@@ -289,3 +335,17 @@ In order to run the migrations you will need to then type the following:
 If you need to set the Flask app environment variable simply run the command:
 
 - `$env:FLASK_APP="app.py"`
+
+# Credits
+
+## Content
+
+Blog article content was generated by using [ChatGPT](https://openai.com/index/chatgpt/)
+
+## Media
+
+Images used on the website were sourced either from my own photos or from [Unsplash](https://unsplash.com/)
+
+## Acknowledgements
+
+Thanks again to my Mentor, Brian Macharia, for provided continuous feedback on my ideas and progress as well as the teams at Code Institute and East Kent College for their ongoing support.
