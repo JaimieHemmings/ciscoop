@@ -195,6 +195,68 @@ A breakdown of the various elements and their implementation across the website.
 - Ability to View Messages
 - Ability to Delete Messages
 
+## CRUD Table
+
+Below is a table of CRUD functionality for each relevant page:
+
+| Page            | C                                         | R                          | U                               | D                 |
+| --------------- | ----------------------------------------- | -------------------------- | ------------------------------- | ----------------- |
+| Home            |                                           | Fetch 3 latest blog posts  |                                 |                   |
+| Blog            |                                           | Fetch paginated blog posts |                                 |                   |
+| Contact         | Submit Message                            |                            |                                 |                   |
+| Admin           | Create Blog Posts                         |                            |                                 |                   |
+| Edit Post       |                                           |                            | Edit specific blog post content |                   |
+| Blog Management |                                           |                            |                                 | Delete Blog Posts |
+| View Messages   | Read messages submitted from contact page |                            |                                 | Delete Messages   |
+| Login           |                                           | Check password hash        |                                 |                   |
+| Register        | User profile                              |                            |                                 |                   |
+
+## Defensive Programming
+
+Defensive programming has been a core concept driving the development of this webiste and its functionality from the beginning. In order to make a reasonable attempt at securing the website I have implemented the following:
+
+- Priviledged pages check the user role and session before rendering and redirect the user if criteria for the page isn't met.
+
+## Error Handling
+
+I have implemented the following handlers in order to catch and gracefully redirect the user where necassary:
+
+- 400: Bad request error
+- 404: Not found error
+- 408: Request Timeout Error
+- 500: Internal Server Error
+
+# Technologies Used
+
+- Languages:
+
+  - HTML5: HTML was used for the page structure
+  - CSS3: Used for styling the website
+  - JavaScript: was used sparingly where necassary for additional functionality
+  - Python: For handling server side logic of the website
+
+- Flask
+- Flask Migrate
+- Postgres
+- SQLAlchemy
+- pip
+- Werkzeug
+- Jinja
+- CKEditor
+- Balsamiq
+- Git
+- Bootstrap 5
+- Heroku
+- CloudConvert
+
+# Future Implementation
+
+- Expanding the user profile by allowing the user to add and edit their profile information such as first name, last name, sate of birth etc.
+- Allow registered users to delete their own accounts
+- Allowing the uploading of images
+- Allow user comments on blog posts
+- Provide a user interface for the moderating of ragistered users
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
