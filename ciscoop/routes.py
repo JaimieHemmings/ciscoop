@@ -57,6 +57,8 @@ def contact():
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).first()
         user_email = user.email
+    else:
+        user_email = None
     if request.method == 'POST':
         # get form data
         name = request.form['name']

@@ -111,6 +111,32 @@ Based on the premise of creating a minimally viable product I have decided to fo
 - Defensive programming usage to safeguard the database from malicious or erroneous input
 - Appropriate handling of error messages
 
+# Structure
+
+## Topology Diagrams
+
+Below are diagrams illustrating the pages that are accessible for users based on their session state (guest/logged in guest/admin), any page not listed in a diagram is designed not to be accessible by a user.
+
+- Guest:
+
+![Guest Topology Diagram](documentation/img/guest-website-topologoy.jpg)
+
+- Logged In User:
+
+![Registered User Topology](documentation/img/registered-user-website-topologoy.jpg)
+
+- Admin:
+
+![Admin User Topology](documentation/img/admin-user-website-topology.jpg)
+
+## Database Schema & Structure
+
+The CI/Scoop website runs from a single database with multiple tables. One table for the management of users, a table for blog posts and another table for messages.
+
+Only users with admin privilidges can modify or delete any data. The diagram below (ERD) shows the relationships between these tables.
+
+![ERD For Database](documentation/img/ERD.jpg)
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
