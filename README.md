@@ -137,6 +137,64 @@ Only users with admin privilidges can modify or delete any data. The diagram bel
 
 ![ERD For Database](documentation/img/ERD.jpg)
 
+# Skeleton
+
+## Wireframes
+
+## Colour Scheme
+
+![Colour Palette](documentation/img/colour-palette.jpg)
+
+For the colour palette design I decided to focus on 3 colours shown above for the primary design.
+
+## Typography
+
+I have decided to stick with only one imported font (Roboto, supplied by Google Fonts). I will use this for emphasis on headings and interactive elements in order to direct the users focus to key areas of the page. I decided to use default system fonts elsewhere on the page in order to improve performance.
+
+## Imagery
+
+For various photos around the site I have deicded to use some of my own photos and stock imagery supplied for free by [Unsplash](https://unsplash.com/).
+
+# Features
+
+A breakdown of the various elements and their implementation across the website.
+
+## Multipage Elements
+
+**Navbar**
+
+- Logo
+- Navigational Links
+
+**Footer**
+
+- Contact Information
+
+**Home Page**
+
+- Hero
+- About Section
+- What I do section with Hover effects
+- Latest Blogs with links to specific post
+- Experience
+
+**Blog**
+
+- Chronologically sorted Blog Posts
+- Pagination
+
+**Contact**
+
+- Form to send Admin/Owner a message
+
+**Admin Dashboard**
+
+- Ability to create posts using a feature rich text editor
+- Ability to edit posts using a feature rich text editor
+- Ability to Delete posts
+- Ability to View Messages
+- Ability to Delete Messages
+
 # Create Virtual environment
 
 To create a virtual environment for the project open gitbash or CLI of your choice within the project directory. To do this follow the instructions below:
