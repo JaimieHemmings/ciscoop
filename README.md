@@ -18,11 +18,42 @@ The choice to make this project was influenced by my need for a blogging platfor
 
 <details>
 <summary>Table of Contents</summary>
-- Add
-- table
-- of
-- contents
-- here
+
+- [Project Overview](#project-overview)
+- [UX Development](#ux-development)
+  - [Strategy](#strategy)
+    - [Project Goals](#project-goals)
+    - [User Demographic](#user-demographic)
+    - [User Stories](#user-stories)
+    - [Scope](#scope)
+- [Structure](#structure)
+  - [Topology](#topology-diagrams)
+  - [Database Schema](#database-schema--structure)
+- [Skeleton](#skeleton)
+  - [Wireframes](#wireframes)
+  - [Colour Schemes](#colour-scheme)
+  - [Typography](#typography)
+  - [Imagery](#imagery)
+- [Features](#features)
+  - [Multi-Page Elements](#multipage-elements)
+  - [CRUD Table](#crud-table)
+  - [Defensive Programming](#defensive-programming)
+  - [Error Handling](#error-handling)
+- [technologies Used](#technologies-used)
+- [Future Implementation](#future-implementation)
+- [Testing](#testing)
+  - [Bugs, Issues and Solutions](#bugs-issues-and-solutions)
+- [Deployment and Local Development](#deployment-and-local-development)
+  - [Deployment](#deployment-to-heroku)
+  - [Cloning](#cloning-the-repo)
+  - [Forking](#forking-the-repo)
+  - [VENV Help](#create-virtual-environment)
+  - [Database Help](#create-and-migrate-database)
+- [Credits](#credits)
+  - [Content](#content)
+  - [Media](#media)
+  - [Acknowledgements](#acknowledgements)
+
 </details>
 
 # UX Development
@@ -102,7 +133,7 @@ When planning the scope of the project I created a Viability Analysis of the fea
 
 Based on the premise of creating a minimally viable product I have decided to focus on implementing only the core functionality for the application to meet the minimum required specifications for functionality. This means on the initial development sprint I will be implementing features 1, 2, 3, 4, 5 and 12.
 
-### Functionality Requirements
+#### Functionality Requirements
 
 - Clean and thematically cohesive design
 - Functional and aesthetic presentation of blog posts
