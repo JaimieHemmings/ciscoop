@@ -235,19 +235,32 @@ I have implemented the following handlers in order to catch and gracefully redir
   - JavaScript: was used sparingly where necassary for additional functionality
   - Python: For handling server side logic of the website
 
-- Flask
-- Flask Migrate
-- Postgres
-- SQLAlchemy
-- pip
-- Werkzeug
-- Jinja
-- CKEditor
-- Balsamiq
-- Git
-- Bootstrap 5
-- Heroku
-- CloudConvert
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/)
+  - Flask is a Python based micro web framework
+- [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+  - Flask Migrate is a tool for handling SQLAlchemy database migrations using Alembic
+- [PostgreSQL](https://www.postgresql.org/)
+  - A powerful and open source object-relational database system
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+  - A Python SQL toolkit and ORM (Object Relational Mapper)
+- [pip](https://pypi.org/project/pip/)
+  - A package installer for Python
+- [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/)
+  - A WSGI web application library
+- [Jinja](https://jinja.palletsprojects.com/en/3.1.x/)
+  - A templating engine
+- [CKEditor](https://ckeditor.com/)
+  - An integratable rich text editor
+- [Balsamiq](https://balsamiq.com/)
+  - An appllication for creating wireframe templates
+- [Git](https://git-scm.com/)
+  - A version control system
+- [Bootstrap 5](https://getbootstrap.com/)
+  - A front end templating library
+- [Heroku](https://dashboard.heroku.com)
+  - A cloud platform for hostign websites and applications
+- [CloudConvert](https://cloudconvert.com/)
+  - A media conversion tool
 
 # Future Implementation
 
@@ -261,7 +274,21 @@ I have implemented the following handlers in order to catch and gracefully redir
 
 Comprehensive testing documentation can be found in the testing document.
 
-# Bugs, Issues and Solutions
+## Bugs, Issues and Solutions
+
+| #   | Issue                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Solution |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 1   | I am a big proponent of autofilling data to improve the user experience wherever possible, therefore when I created the contact form I wanted to autofill it with any appropriate information from the user profile when they were logged in. To this end when I rendered the contact page in my `routes.py` file I was passing a user_email variable to the template. It wasn't until much later on when I was testing that I found this caused an issue when there was no active session. In this case the page was unable to render with the error message |
+
+`UnboundLocalError: cannot access local variable 'user_email' where it is not associated with a value`
+
+<br>
+
+In this case the variable was undefined and caused the issue.<br> | In order to resolve the issue I added an else statement wherein I defined the variable as an empty string if the current user was not logged in |
+| | | |
+| | | |
+| | | |
+| | | |
 
 # Deployment and Local Development
 
