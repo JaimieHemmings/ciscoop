@@ -16,16 +16,16 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
-            class="nav-link active"
-            aria-current="page"
+            class="nav-link{{ ' active' if active_page == 'home'}}"
+            {{"aria-current=page" if active_page == 'home'}}
             href="{{ url_for('home') }}"
             >Home</a
           >
         </li>
         <li class="nav-item">
           <a
-            class="nav-link active"
-            aria-current="page"
+            class="nav-link{{' active' if active_page == 'blog'}}"
+            {{"aria-current=page" if active_page == 'blog'}}
             href="{{ url_for('blog') }}"
             >Blog</a
           >
@@ -33,16 +33,15 @@
 
         <li class="nav-item">
           <a
-            class="nav-link active"
-            aria-current="page"
+            class="nav-link{{' active' if active_page == 'contact'}}"
+            {{"aria-current=page" if active_page == 'contact'}}
             href="{{ url_for('contact') }}"
             >Contact</a
           >
         </li>
         <li class="nav-item dropdown">
-          <a
+          <button
             class="nav-link"
-            href="#"
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
@@ -63,26 +62,42 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </a>
+            Profile
+          </button>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <!-- Check if active user session and show appropriate Nav Items -->
             {% if session %}
+
+            
+
+
               <li>
-                <a class="dropdown-item" href="{{ url_for('profile') }}"
-                  >Profile</a
-                >
+                <a
+                  class="dropdown-item{{' active' if active_page == 'profile'}}"
+                  {{"aria-current=page" if active_page == 'profile'}}
+                  href="{{ url_for('profile') }}"
+                  >Profile
+                </a>
               </li>
               <li>
                 <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
               </li>
             {% else %}
               <li>
-                <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+                <a
+                class="dropdown-item{{' active' if active_page == 'login'}}"
+                {{"aria-current=page" if active_page == 'login'}}
+                  href="{{ url_for('login') }}">
+                  Login
+                </a>
               </li>
               <li>
-                <a class="dropdown-item" href="{{ url_for('register') }}"
-                  >Register</a
-                >
+                <a
+                  class="dropdown-item{{' active' if active_page == 'register'}}"
+                  {{"aria-current=page" if active_page == 'register'}}
+                  href="{{ url_for('register') }}"
+                  >Register
+                </a>
               </li>
             {% endif %}
             <!-- Show Admin Nav Items if user is an admin -->
@@ -91,7 +106,10 @@
                 <hr />
               </li>
               <li>
-                <a class="dropdown-item" href="{{ url_for('admin') }}">Admin</a>
+                <a
+                  class="dropdown-item{{' active' if active_page == 'admin'}}"
+                  {{"aria-current=page" if active_page == 'admin'}}
+                  href="{{ url_for('admin') }}">Admin</a>
               </li>
             {% endif %}
           </ul>
