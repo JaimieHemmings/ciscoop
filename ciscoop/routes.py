@@ -365,6 +365,15 @@ def logout():
     return redirect(url_for('home'))
 
 
+# Handle Bad Requests
+@app.errorhandler(400)
+def bad_request(e):
+    return render_template(
+        '400.html',
+        title="Uh oh! Error: 400",
+        error_message=e), 400
+
+
 # Invalid URL
 @app.errorhandler(404)
 def page_not_found(e):
@@ -372,6 +381,15 @@ def page_not_found(e):
         '404.html',
         title="Uh oh! Error: 404",
         error_message=e), 404
+
+
+# Handle Timeout Errors
+@app.errorhandler(408)
+def request_timeout(e):
+    return render_template(
+        '408.html',
+        title="Uh oh! Error: 408",
+        error_message=e), 408
 
 
 # Internal Server Error
