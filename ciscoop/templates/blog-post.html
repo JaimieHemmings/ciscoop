@@ -1,16 +1,17 @@
-{% extends "base.html" %} {% block content %}
-<section class="px-4 py-5 text-center small-hero bg-image">
-  <div class="row">
-    <h1 class="display-5 fw-bold mb-3">
-      Blog: <span class="focus-text">{{ post.title }}</span>
-    </h1>
-  </div>
-</section>
-<section class="blog-posts">
-  <div class="container">
+{% extends "base.html" %}
+{% block content %}
+  <section class="px-4 py-5 text-center small-hero bg-image">
     <div class="row">
-      <div class="col-12 mt-3 ck-content">{{ post.content|safe }}</div>
+      <h1 class="display-5 fw-bold mb-3">
+        Blog: <span class="focus-text">{{ post.title }}</span>
+      </h1>
     </div>
-  </div>
-  {% endblock %}
-</section>
+  </section>
+  <section class="blog-posts">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mt-3 ck-content">{{ post.content|safe }}</div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

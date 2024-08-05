@@ -1,139 +1,149 @@
-{% extends "base.html" %} {% block content %}
-<section class="px-4 py-5 text-center index-hero bg-image">
-  <div class="container">
-    <h1 class="display-5 fw-bold mb-3" data-text="THIS IS A TEST">
-      Welcome to <span class="focus-text">CI/Scoop</span>
-    </h1>
-    <p>
-      My corner of the internet where I share my progress as a
-      <span class="focus-text">full stack developer</span>
-    </p>
-    <div class="col-lg-6 mx-auto">
-      <a class="btn btn-primary btn-lg" type="button" href="#about"
-        >Learn More</a
-      >
-    </div>
-  </div>
-</section>
-<section class="about" id="about">
-  <div class="container">
-    <div class="row">
-      <h2 class="sub-title">ABOUT ME</h2>
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+  <section class="px-4 py-5 text-center index-hero bg-image">
+    <div class="container">
+      <h1 class="display-5 fw-bold mb-3" data-text="THIS IS A TEST">
+        Welcome to <span class="focus-text">CI/Scoop</span>
+      </h1>
       <p>
-        I am a <span class="focus-text">selectively skilled</span> full stack
-        developer with a focus on producing high impact engaging websites.
+        My corner of the internet where I share my progress as a
+        <span class="focus-text">full stack developer</span>
       </p>
+      <div class="col-lg-6 mx-auto">
+        <a class="btn btn-primary btn-lg" type="button" href="#about"
+          >Learn More</a
+        >
+      </div>
     </div>
-  </div>
-</section>
-<section class="skills">
-  <div class="container">
-    <h2 class="sub-title">WHAT I DO</h2>
-  </div>
-  <ul>
-    <li>
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <p>FRONTEND</p>
-          </div>
-          <div class="col-6">
-            <p class="small">
-              JavaScript <span class="focus-text">/</span> CSS
-              <span class="focus-text">/</span> HTML
-            </p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <p>BACKEND</p>
-          </div>
-          <div class="col-6">
-            <p class="small">PYTHON <span class="focus-text">/</span> NODE</p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <p>Databases</p>
-          </div>
-          <div class="col-6">
-            <p class="small">
-              MongoDB <span class="focus-text">/</span> PostgreSQL
-            </p>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <p>DESIGN</p>
-          </div>
-          <div class="col-6">
-            <p class="small">
-              PHOTOSHOP <span class="focus-text">/</span> FIGMA
-            </p>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</section>
-
-<section class="home-blog">
-  <div class="container">
-    <div class="row">
-      <h2 class="sub-title">LATEST BLOG POSTS</h2>
-    </div>
-    <div class="row">
-      {% if posts %} {% for post in posts %}
-      <div class="col-md-4 mt-3 text-center">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">{{ post.title }}</h3>
-            {{ post.content | safe | truncate(50, true, '...') }}
-            <div class="card-footer">
-              <a
-                href="{{ url_for('blog_post', slug=post.slug) }}"
-                class="btn btn-primary"
-                >Read More</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %} {% else %}
-      <div class="col">
-        <p>No posts to show</p>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-</section>
-<section class="experience bg-image">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <h2 class="sub-title">EXPERIENCE</h2>
+  </section>
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="row">
+        <h2 class="sub-title">ABOUT ME</h2>
         <p>
-          Years of experience
-          <span class="focus-text">
-            designing full fledged web applications
-          </span>
-          in a variety of technologies including JavaScript, Python, React,
-          Next.JS, Django
+          I am a <span class="focus-text">selectively skilled</span> full stack
+          developer with a focus on producing high impact engaging websites.
         </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <!-- Skills Section -->
+  <section class="skills">
+    <div class="container">
+      <h2 class="sub-title">WHAT I DO</h2>
+    </div>
+    <ul>
+      <li>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <p>FRONTEND</p>
+            </div>
+            <div class="col-6">
+              <p class="small">
+                JavaScript <span class="focus-text">/</span> CSS
+                <span class="focus-text">/</span> HTML
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <p>BACKEND</p>
+            </div>
+            <div class="col-6">
+              <p class="small">PYTHON <span class="focus-text">/</span> NODE</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <p>Databases</p>
+            </div>
+            <div class="col-6">
+              <p class="small">
+                MongoDB <span class="focus-text">/</span> PostgreSQL
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <p>DESIGN</p>
+            </div>
+            <div class="col-6">
+              <p class="small">
+                PHOTOSHOP <span class="focus-text">/</span> FIGMA
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <!-- Blog Section -->
+  <section class="home-blog">
+    <div class="container">
+      <div class="row">
+        <h2 class="sub-title">LATEST BLOG POSTS</h2>
+      </div>
+      <div class="row">
+        <!-- Check if there are posts to show -->
+        {% if posts|length > 0 %}
+          <!-- Loop through the posts to format and display them -->
+          {% for post in posts %}
+            <div class="col-md-4 mt-3 text-center">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">{{ post.title }}</h3>
+                  {{ post.content | safe | truncate(50, true, '...') }}
+                  <div class="card-footer">
+                    <a
+                      href="{{ url_for('blog_post', slug=post.slug) }}"
+                      class="btn btn-primary"
+                      >Read More</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        <!-- If there are no posts to show -->
+        {% else %}
+          <div class="col">
+            <p>No posts to show</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <!-- Experience Section -->
+  <section class="experience bg-image">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="sub-title">EXPERIENCE</h2>
+          <p>
+            Years of experience
+            <span class="focus-text">
+              designing full fledged web applications
+            </span>
+            in a variety of technologies including JavaScript, Python, React,
+            Next.JS, Django
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

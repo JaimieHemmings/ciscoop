@@ -65,31 +65,34 @@
             </svg>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            {% if session['username'] %}
-            <li>
-              <a class="dropdown-item" href="{{ url_for('profile') }}"
-                >Profile</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
-            </li>
+            <!-- Check if active user session and show appropriate Nav Items -->
+            {% if session %}
+              <li>
+                <a class="dropdown-item" href="{{ url_for('profile') }}"
+                  >Profile</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+              </li>
             {% else %}
-            <li>
-              <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{ url_for('register') }}"
-                >Register</a
-              >
-            </li>
-            {% endif %} {% if session['role'] == 'admin' %}
-            <li>
-              <hr />
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{ url_for('admin') }}">Admin</a>
-            </li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('register') }}"
+                  >Register</a
+                >
+              </li>
+            {% endif %}
+            <!-- Show Admin Nav Items if user is an admin -->
+            {% if session['role'] == 'admin' %}
+              <li>
+                <hr />
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('admin') }}">Admin</a>
+              </li>
             {% endif %}
           </ul>
         </li>

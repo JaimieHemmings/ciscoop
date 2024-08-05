@@ -1,57 +1,65 @@
-{% extends "base.html" %} {% block content %}
-<section class="px-4 py-5 text-center small-hero bg-image">
-  <div class="row">
-    <h1 class="display-5 fw-bold mb-3">
-      Latest <span class="focus-text">ramblings!</span>
-    </h1>
-  </div>
-</section>
-<section class="blog-posts">
-  <div class="container">
+{% extends "base.html" %}
+{% block content %}
+  <!-- Hero Section -->
+  <section class="px-4 py-5 text-center small-hero bg-image">
     <div class="row">
-      <div class="col-12">
-        <h2 class="sub-title">Blog Posts</h2>
-        <ul class="blog-list mt-3">
-          {% if posts %} {% for post in posts %}
-          <li>
-            <div class="row">
-              <div class="col-sm-8">
-                <h3>{{ post.title }}</h3>
-                <p class="mt-1 mb-3">
-                  {{ post.content|truncate(50,true,'...')|safe }}
-                </p>
+      <h1 class="display-5 fw-bold mb-3">
+        Latest <span class="focus-text">ramblings!</span>
+      </h1>
+    </div>
+  </section>
+  <section class="blog-posts">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="sub-title">Blog Posts</h2>
+          <ul class="blog-list mt-3">
+            <!-- Check if there are any posts to display -->
+            {% if posts|length > 0 %}
+              <!-- Loop through each post to display it -->
+              {% for post in posts %}
+                <li>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h3>{{ post.title }}</h3>
+                      <p class="mt-1 mb-3">
+                        <!-- Display truncated content with HTML formatting -->
+                        {{ post.content|truncate(50,true,'...')|safe }}
+                      </p>
+                    </div>
+                    <div class="col-sm-4 d-flex flex-column justify-content-center">
+                      <a
+                        href="{{ url_for('blog_post', slug=post.slug) }}"
+                        class="btn btn-primary mb-3 mt-3 w-100"
+                        >Read More</a
+                      >
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            <!-- If no posts do this instead -->
+            {% else %}
+              <div class="row">
+                <div class="col">
+                  <p>No posts to show</p>
+                </div>
               </div>
-              <div class="col-sm-4 d-flex flex-column justify-content-center">
-                <a
-                  href="{{ url_for('blog_post', slug=post.slug) }}"
-                  class="btn btn-primary mb-3 mt-3 w-100"
-                  >Read More</a
-                >
-              </div>
-            </div>
-          </li>
-          {% endfor %} {% else %}
-          <div class="row">
-            <div class="col">
-              <p>No posts to show</p>
-            </div>
-          </div>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 page-buttons">
+          <!-- Check if there is a previous page to show -->
+          {% if prev_url %}
+            <a class="btn btn-primary" href="{{ prev_url }}">Newer posts</a>
           {% endif %}
-        </ul>
+          <!-- Check if there is a next page to show -->
+          {% if next_url %}
+            <a class="btn btn-primary" href="{{ next_url }}">Older posts</a>
+          {% endif %}
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 page-buttons">
-        <!-- Check if there is a previous page to show -->
-        {% if prev_url %}
-        <a class="btn btn-primary" href="{{ prev_url }}">Newer posts</a>
-        {% endif %}
-        <!-- Check if there is a next page to show -->
-        {% if next_url %}
-        <a class="btn btn-primary" href="{{ next_url }}">Older posts</a>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 {% endblock %}

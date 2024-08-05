@@ -23,6 +23,8 @@ def blog():
     # Get current page of posts
     curr_posts = Post.query.order_by(
         Post.created.desc()).paginate(page=page, per_page=5)
+    if len(curr_posts.items) == 0:
+        curr_posts = ""
     # Get next and previous page URLs
     next_url = url_for(
         'blog', page=curr_posts.next_num) if curr_posts.has_next else None
@@ -271,6 +273,8 @@ def edit_post(id):
         return redirect(url_for('home'))
     # Get post by id
     post = Post.query.filter_by(id=id).first()
+    if post is None:
+        post = ""
     if request.method == 'POST':
         # get form data
         title = request.form['title']
@@ -328,6 +332,8 @@ def messages_page():
         return redirect(url_for('home'))
     # Get all messages
     messageData = Message.query.all()
+    if len(messageData) == 0:
+        messageData = ""
     return render_template(
         'messages.html',
         title="Messages",
@@ -363,6 +369,14 @@ def logout():
     session.clear()
     flash("You have been logged out.")
     return redirect(url_for('home'))
+
+
+"""
+    ----- Error Handling -----
+    The below statements should catch and gracefully handle the majority,
+    if not all, of the errors that could occur
+
+"""
 
 
 # Handle Bad Requests
