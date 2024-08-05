@@ -52,6 +52,10 @@ The a11y Contrast Test results displayed one issue which I believe is a false po
 
 As you can see the text is actually white. It has a hover state where the background is red and the text is black so I believe the automated testing has somehow gotten confused so i will be ignoring this error.
 
+## Wave Test Results
+
+![Wave Test Results](documentation/wave/wave-results.png)
+
 # Responsiveness
 
 ## Responsive Design Testing
