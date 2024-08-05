@@ -336,6 +336,9 @@ Comprehensive testing documentation can be found in the [testing document](TESTI
   This appeared to be from the message flashing function of Flask of my base template, the function was nested inside of section and then a div.
     - I have moved the `if messages` logic to outside of the div and section in order to resolve this issue.
 
+- W3C Markup validator also detected an issue where a section lacked a heading tag on the Contact page for the form. I believe in this case a heading is not required and so I have option to remove the section element as the form was already a child of a wrapping div which invoked the necassary styling.
+  - `Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.`
+
 # Deployment and Local Development
 
 ## Deployment to Heroku
