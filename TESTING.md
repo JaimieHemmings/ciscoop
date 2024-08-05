@@ -51,3 +51,46 @@ The a11y Contrast Test results displayed one issue which I believe is a false po
 ![False Positive](documentation/a11y-results/false-positive.png)
 
 As you can see the text is actually white. It has a hover state where the background is red and the text is black so I believe the automated testing has somehow gotten confused so i will be ignoring this error.
+
+# Responsiveness
+
+## Responsive Design Testing
+
+- [Home - Desktop](documentation/responsiveness/home-desktop.png)
+- [Home - Notepad](documentation/responsiveness/home-tablet.png)
+- [Home - Mobile](documentation/responsiveness/home-mobile.png)
+
+- [Blog - Desktop](documentation/responsiveness/blog-desktop.png)
+- [Blog - Notepad](documentation/responsiveness/blog-tablet.png)
+- [Blog - Mobile](documentation/responsiveness/blog-mobile.png)
+
+- [Contact - Desktop](documentation/responsiveness/contact-desktop.png)
+- [Contact - Notepad](documentation/responsiveness/contact-tablet.png)
+- [Contact - Mobile](documentation/responsiveness/contact-mobile.png)
+
+- [Register - Desktop](documentation/responsiveness/register-desktop.png)
+- [Register - Notepad](documentation/responsiveness/register-tablet.png)
+- [Register - Mobile](documentation/responsiveness/register-mobile.png)
+
+- [Login - Desktop](documentation/responsiveness/login-desktop.png)
+- [Login - Notepad](documentation/responsiveness/login-tablet.png)
+- [Login - Mobile](documentation/responsiveness/login-mobile.png)
+
+# Manual testing
+
+| Test                | Goal                                                                                          | Result |
+| ------------------- | --------------------------------------------------------------------------------------------- | ------ |
+| Responsiveness      | Website to be responsive across all screen sizes                                              | Pass   |
+| Flash Messages      | Flash messages give feedback to user when actions like Logging in are undertaken              | Pass   |
+| Nav Links           | All navigational links direct user to appropriate pages without any errors                    | Pass   |
+| Article Creation    | Admin Users can create Blog Posts without errors                                              | Pass   |
+| Edit Articles       | Admin can edit articles without errors                                                        | Pass   |
+| Delete Articles     | Admin can delete articles without errors                                                      | Pass   |
+| Priviledged access  | Users without permissions get redirected from priviledged pages                               | Pass   |
+| Form Submission     | A user of any state should be able to successfully submit the form on the contact page        | Pass   |
+| Read Messages       | An Admin user should be able to access and delete all messages submitted via the contact Form | Pass   |
+| Delete Messages     | An Admin User should be able to Delete Messages submitted via the Contact Form                | Pass   |
+| Login               | A registered User should be able to log in using the correct credentials                      | Pass   |
+| Logout              | A logged in user should be able to log out successfully                                       | Pass   |
+| Register            | A guest should be able to register an account on the register page                            | Pass   |
+| Navbar links update | the Nav Menu links should update based on the state of the user session                       | Pass   |
