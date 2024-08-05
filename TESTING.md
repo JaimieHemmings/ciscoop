@@ -94,3 +94,54 @@ As you can see the text is actually white. It has a hover state where the backgr
 | Logout              | A logged in user should be able to log out successfully                                       | Pass   |
 | Register            | A guest should be able to register an account on the register page                            | Pass   |
 | Navbar links update | the Nav Menu links should update based on the state of the user session                       | Pass   |
+
+# User Story testing
+
+## First Time Visitor Goals
+
+- Immediately understand the purpose of the website
+  - The user is greeted by a hero banner upon loading the homepage that explains the purpose of the site:
+    ![Site Purpose](documentation/user-stories/site-purpose.png)
+- Immediately recognise how to use and navigate the website
+  - The sites naviagational menu is pinned to the top of the browser window, ensuring the user always has access to it and is always visible.
+    ![Navbar example](documentation/user-stories/site-purpose.png)
+- Browse the articles available
+  - The articles are displayed on the homepage should the user scroll down slightly and a navigational item is also available in the navbar to direct the user to the dedicated blog page.
+    ![Blog Items](documentation/user-stories/blog-posts.png)
+- Register for an account
+  - A link to the register page can be found in the navigational menu.
+    ![Register Page](documentation/responsiveness/register-desktop.png)
+
+## Registered/Returning Visitor Goals
+
+As a registered or returning visitor I want to be able to:
+
+- Easily find new content
+  - The front page of the website displays the 3 latest blog posts and updates automatically when a new post is committed to the database.
+    ![Blog Posts](documentation/user-stories/blog-posts.png)
+- Send a message to the site owner/admin
+  - The contact page allows users to send messages that can be read by site Admins.
+    ![Contact Page](documentation/responsiveness/contact-desktop.png)
+- Browse new blog posts
+  - The blog page is sorted chronologically always showing the newest post to the user.
+    ![Blog Page](documentation/responsiveness/blog-desktop.png)
+
+## Site Admin Goals
+
+As a site admin I want to be able to:
+
+- Be able to add a new blog post
+  - This can be done directly from the admin page.
+    ![Admin Page](documentation/user-stories/admin-page.png)
+- Be able to edit exisiting blog posts
+  - The functionality to do this can be found in the users admin panel
+    ![Edit Post](documentation/user-stories/edit-page.png)
+- Be able to delete exisiting blog posts
+  - The ability to delete posts can befound in the users admin area page
+    ![Delete Posts Functionality](documentation/user-stories/delete-posts.png)
+- View messages sent via the contact form
+  - The admin area allows admin users this ability
+    ![View Messages](documentation/user-stories/view-messages.png)
+- Delete messages sent via the contact form
+  - The functionality to do this is, again, available in the admin area.
+    ![Delete Messages](documentation/user-stories/view-messages.png)
