@@ -16,8 +16,10 @@ CI/Scoop is my submission for the Milestone 3 Project by Code Institute in partn
 
 The choice to make this project was influenced by my need for a blogging platform to highlight my projects and knowledge in full stack web application by creating a portfolio website, thereby the website itself is a demenstration of my abilities.
 
+# README Contents
+
 <details>
-<summary>Table of Contents</summary>
+<summary>Table of Contents </summary>
 
 - [Project Overview](#project-overview)
 - [UX Development](#ux-development)
