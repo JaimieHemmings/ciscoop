@@ -330,8 +330,11 @@ Comprehensive testing documentation can be found in the [testing document](TESTI
   - In order to resolve the issue I added an else statement wherein I defined the variable as an empty string if the current user was not logged in.
 
 - The W3c Validator detected a stray end div tag within the homepage of the website:
+
   ![Stray div closing tag](documentation/img/stray-div.png)
-  This appeared to be from the message flashing function of Flask of my base template, the function was nested inside of section and then a div. I have moved the `if messages` logic to outside of the div and section in order to resolve this issue.
+
+  This appeared to be from the message flashing function of Flask of my base template, the function was nested inside of section and then a div.
+    - I have moved the `if messages` logic to outside of the div and section in order to resolve this issue.
 
 # Deployment and Local Development
 
