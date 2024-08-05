@@ -288,12 +288,17 @@ I have implemented the following handlers in order to catch and gracefully redir
 
 # Testing
 
-Comprehensive testing documentation can be found in the testing document.
+Comprehensive testing documentation can be found in the [testing document](TESTING.md).
 
 ## Bugs, Issues and Solutions
 
 - I am a big proponent of autofilling data to improve the user experience wherever possible, therefore when I created the contact form I wanted to autofill it with any appropriate information from the user profile when they were logged in. To this end when I rendered the contact page in my `routes.py` file I was passing a user_email variable to the template. It wasn't until much later on when I was testing that I found this caused an issue when there was no active session. In this case the page was unable to render with the error message <br> `UnboundLocalError: cannot access local variable 'user_email' where it is not associated with a value`.<br> In this case the variable was undefined and caused the issue.
+
   - In order to resolve the issue I added an else statement wherein I defined the variable as an empty string if the current user was not logged in.
+
+- The W3c Validator detected a stray end div tag within the homepage of the website:
+  ![Stray div closing tag](documentation/img/stray-div.png)
+  This appeared to be from the message flashing function of Flask of my base template, the function was nested inside of section and then a div. I have moved the `if messages` logic to outside of the div and section in order to resolve this issue.
 
 # Deployment and Local Development
 
