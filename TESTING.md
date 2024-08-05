@@ -30,3 +30,24 @@ My Javascript file is particularly small but for the sake of completeness I have
 ## PEP8 Validation
 
 ![PEP8 Validation](documentation/img/pep8-validator.png)
+
+## Lighthouse Results
+
+- [Home - Mobile](documentation/lighthouse-results/home-mobile.png)
+- [Home - Desktop](documentation/lighthouse-results/home-desktop.png)
+- [Blog - Mobile](documentation/lighthouse-results/blog-mobile.png)
+- [Blog - Desktop](documentation/lighthouse-results/blog-desktop.png)
+- [Article - Mobile](documentation/lighthouse-results/article-mobile.png)
+- [Article - Desktop](documentation/lighthouse-results/article-desktop.png)
+- [Contact - Mobile](documentation/lighthouse-results/contact-mobile.png)
+- [Contact - Desktop](documentation/lighthouse-results/contact-desktop.png)
+
+## a11y Contrast Test Results
+
+![a11y Contrast Results](documentation/a11y-results/a11y-results.png)
+
+The a11y Contrast Test results displayed one issue which I believe is a false positive, as it is showing black text on a black background for the text "FRONTEND" which I believe to be the section shown in the picture below.
+
+![False Positive](documentation/a11y-results/false-positive.png)
+
+As you can see the text is actually white. It has a hover state where the background is red and the text is black so I believe the automated testing has somehow gotten confused so i will be ignoring this error.
