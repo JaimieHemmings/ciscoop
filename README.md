@@ -153,6 +153,10 @@ Only users with admin privilidges can modify or delete any data. The diagram bel
 
 ![Contact Wireframe](documentation/wireframes/contact-wireframe.png)
 
+- Example Article Page
+
+![Article Wireframe](documentation/wireframes/example-article-page.png)
+
 ## Colour Scheme
 
 ![Colour Palette](documentation/img/colour-palette.jpg)
