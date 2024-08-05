@@ -166,7 +166,7 @@ Below are diagrams illustrating the pages that are accessible for users based on
 
 The CI/Scoop website runs from a single database with multiple tables. One table for the management of users, a table for blog posts and another table for messages.
 
-Only users with admin privilidges can modify or delete any data. The diagram below (ERD) shows the relationships between these tables.
+Only users with admin privileges can modify or delete any data. The diagram below (ERD) shows the relationships between these tables.
 
 ![ERD For Database](documentation/img/ERD.jpg)
 
@@ -264,7 +264,7 @@ Below is a table of CRUD functionality for each relevant page:
 
 Defensive programming has been a core concept driving the development of this webiste and its functionality from the beginning. In order to make a reasonable attempt at securing the website I have implemented the following:
 
-- Priviledged pages check the user role and session before rendering and redirect the user if criteria for the page isn't met.
+- Privileged pages check the user role and session before rendering and redirect the user if criteria for the page isn't met.
 
 ## Error Handling
 
