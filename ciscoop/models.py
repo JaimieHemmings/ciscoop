@@ -52,8 +52,8 @@ class Comment(db.Model):
     # schema for Comment model
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    username = db.relationship(
-        'User', backref=db.backref('Comment', lazy=True))
+    username = db.Column(
+        db.String(), db.ForeignKey('user.username'), nullable=False)
     content = db.Column(db.String(280), unique=False, nullable=False)
     created = db.Column(db.DateTime, server_default=db.func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)

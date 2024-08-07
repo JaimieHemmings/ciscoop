@@ -47,6 +47,7 @@ def blog_post(slug):
             return redirect(url_for('login'))
         # get form data
         comment = request.form['comment']
+        username = session['username']
         user_id = session['user_id']
         # Get the post_id
         post_id = Post.query.filter_by(slug=slug).first().id
@@ -58,7 +59,7 @@ def blog_post(slug):
             return redirect(url_for('blog_post', slug=slug))
         # create new comment
         new_comment = Comment(
-            content=comment, post_id=post_id, user_id=user_id)
+            content=comment, post_id=post_id, user_id=user_id, username=username)
         # add new comment to database
         db.session.add(new_comment)
         db.session.commit()
