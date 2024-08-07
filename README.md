@@ -235,6 +235,7 @@ A breakdown of the various elements and their implementation across the website.
 **Contact**
 
 - Form to send Admin/Owner a message
+- Form will autofill where possible using information from user session
 
 **Admin Dashboard**
 
