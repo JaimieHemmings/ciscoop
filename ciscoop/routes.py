@@ -59,7 +59,10 @@ def blog_post(slug):
             return redirect(url_for('blog_post', slug=slug))
         # create new comment
         new_comment = Comment(
-            content=comment, post_id=post_id, user_id=user_id, username=username)
+            content=comment,
+            post_id=post_id,
+            user_id=user_id,
+            username=username)
         # add new comment to database
         db.session.add(new_comment)
         db.session.commit()
@@ -137,7 +140,10 @@ def contact():
         flash("Message sent successfully!")
         return redirect(url_for('contact'))
     return render_template(
-        'contact.html', title="Contact", user_email=user_email, full_name=full_name)
+        'contact.html',
+        title="Contact",
+        user_email=user_email,
+        full_name=full_name)
 
 
 # Login page

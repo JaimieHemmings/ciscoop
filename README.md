@@ -310,6 +310,8 @@ I have implemented the following handlers in order to catch and gracefully redir
   - A cloud platform for hostign websites and applications
 - [CloudConvert](https://cloudconvert.com/)
   - A media conversion tool
+- [Flowbite](https://flowbite.com/icons/)
+  - An online collection of Icon SVG's
 
 # Future Implementation
 
