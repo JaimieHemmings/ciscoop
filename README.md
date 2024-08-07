@@ -339,7 +339,7 @@ Comprehensive testing documentation can be found in the [testing document](TESTI
 - W3C Markup validator also detected an issue where a section lacked a heading tag on the Contact page for the form. I believe in this case a heading is not required and so I have option to remove the section element as the form was already a child of a wrapping div which invoked the necassary styling.
   - `Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.`
 
-- The Admin panel has functionality to delete and edit posts. However, when you delete a post, I used JavaScript to dispplay a confirmation dialogue before deleting the record. A bug in the JS code meant that this dialogue box only worked for the first found instance of the attribute.
+- The Admin panel has functionality to delete and edit posts. However, when you delete a post, I used JavaScript to display a confirmation dialogue before deleting the record. A bug in the JS code meant that this dialogue box only worked for the first found instance of the attribute.
 
 ```
 
@@ -350,19 +350,19 @@ deleteConfirm.addEventListener('click', function () {
 });
 
 ```
-  - I have updated this code to iterate through all the found instances of `delete-button` and provide the functionality individually to each:
-  ```
+    - I have updated this code to iterate through all the found instances of `delete-button` and provide the functionality individually to each:
+    ```
 
-  const deleteConfirm = document.getElementsByClassName('delete-button');
-  // for each element
-  for (let i = 0; i < deleteConfirm.length; i++) {
-    deleteConfirm[i].addEventListener('click', function () {
-      const deleteBtn = this.parentNode.querySelector('.btn');
-      deleteBtn.parentNode.querySelector('.delete-confirm').classList.toggle('hide');
-    });
-  }
+    const deleteConfirm = document.getElementsByClassName('delete-button');
+    // for each element
+    for (let i = 0; i < deleteConfirm.length; i++) {
+      deleteConfirm[i].addEventListener('click', function () {
+        const deleteBtn = this.parentNode.querySelector('.btn');
+        deleteBtn.parentNode.querySelector('.delete-confirm').classList.toggle('hide');
+      });
+    }
 
-  ```
+    ```
 
 
 
