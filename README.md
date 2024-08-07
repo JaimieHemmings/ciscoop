@@ -351,6 +351,7 @@ deleteConfirm.addEventListener('click', function () {
 
 ```
     - I have updated this code to iterate through all the found instances of `delete-button` and provide the functionality individually to each:
+    
     ```
 
     const deleteConfirm = document.getElementsByClassName('delete-button');
