@@ -350,21 +350,19 @@ deleteConfirm.addEventListener('click', function () {
 });
 
 ```
-
   - I have updated this code to iterate through all the found instances of `delete-button` and provide the functionality individually to each:
+  ```
 
-```
+  const deleteConfirm = document.getElementsByClassName('delete-button');
+  // for each element
+  for (let i = 0; i < deleteConfirm.length; i++) {
+    deleteConfirm[i].addEventListener('click', function () {
+      const deleteBtn = this.parentNode.querySelector('.btn');
+      deleteBtn.parentNode.querySelector('.delete-confirm').classList.toggle('hide');
+    });
+  }
 
-const deleteConfirm = document.getElementsByClassName('delete-button');
-// for each element
-for (let i = 0; i < deleteConfirm.length; i++) {
-  deleteConfirm[i].addEventListener('click', function () {
-    const deleteBtn = this.parentNode.querySelector('.btn');
-    deleteBtn.parentNode.querySelector('.delete-confirm').classList.toggle('hide');
-  });
-}
-
-```
+  ```
 
 
 
