@@ -99,7 +99,9 @@ def contact():
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).first()
         user_email = user.email
+        full_name = user.first_name + " " + user.last_name
     else:
+        full_name = None
         user_email = None
     if request.method == 'POST':
         # get form data
@@ -135,7 +137,7 @@ def contact():
         flash("Message sent successfully!")
         return redirect(url_for('contact'))
     return render_template(
-        'contact.html', title="Contact", user_email=user_email)
+        'contact.html', title="Contact", user_email=user_email, full_name=full_name)
 
 
 # Login page

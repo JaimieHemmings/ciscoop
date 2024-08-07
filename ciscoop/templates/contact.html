@@ -27,6 +27,7 @@
           placeholder="Enter your name"
           minlength="5"
           maxlength="50"
+          value="{% if full_name %}{{ full_name }}{% endif %}"
           required
         />
         <label for="email" class="form-label mt-3">Your email:</label>

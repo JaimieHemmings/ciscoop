@@ -127,7 +127,7 @@ img {
 }
 
 .hide {
-  display: none;
+  display: none !important;
   pointer-events: none;
 }
 
@@ -660,4 +660,8 @@ ul.footer-links li a:hover {
 
 .delete-confirm p {
   margin-bottom: 1rem;
+}
+
+.message-list {
+  position: relative;
 }
