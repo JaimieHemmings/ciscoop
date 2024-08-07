@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from ciscoop import app, db
-from ciscoop.models import User, Post, Message
+from ciscoop.models import User, Post, Message, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import Pagination
 import re
@@ -38,15 +38,54 @@ def blog():
 
 
 # Individual Blog Posts
-@app.route('/blog/<slug>')
+@app.route('/blog/<slug>', methods=['GET', 'POST'])
 def blog_post(slug):
+    if request.method == 'POST':
+        # if user is not in session
+        if 'user_id' not in session:
+            flash("Please login to comment on this post.")
+            return redirect(url_for('login'))
+        # get form data
+        comment = request.form['comment']
+        user_id = session['user_id']
+        # Get the post_id
+        post_id = Post.query.filter_by(slug=slug).first().id
+        # Validate form data
+        if len(comment) < 5 or len(comment) > 200:
+            flash(
+                "Comment must be greater than 5 characters"
+                " and less than 200 characters.")
+            return redirect(url_for('blog_post', slug=slug))
+        # create new comment
+        new_comment = Comment(
+            content=comment, post_id=post_id, user_id=user_id)
+        # add new comment to database
+        db.session.add(new_comment)
+        db.session.commit()
+        flash("Comment added successfully!")
+        return redirect(url_for('blog_post', slug=slug))
     # Get post by slug
     post = Post.query.filter_by(slug=slug).first()
     # Check if post exists
     if post is None:
         # Return 404 page
         return render_template('404.html', title="Uh oh! Error: 404"), 404
-    return render_template('blog-post.html', title="Blog Post", post=post)
+    # Get all comments for post
+    comments = Comment.query.filter_by(post_id=post.id).all()
+    if len(comments) == 0:
+        comments = ""
+    # Get user details to autofill comment form
+    if 'user_id' in session:
+        user_id = session['user_id']
+        user = User.query.filter_by(id=user_id).first()
+        username = user.username
+    return render_template(
+        'blog-post.html',
+        title="Blog Post",
+        user_id=user_id if 'user_id' in session else None,
+        post=post,
+        comments=comments,
+        username=username if 'user_id' in session else None)
 
 
 # Contact page
@@ -165,6 +204,43 @@ def profile():
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html', title="Profile", user=user)
+
+
+# Edit Profile Page
+@app.route('/profile/edit', methods=['GET', 'POST'])
+def edit_profile():
+    # Check if user is logged in
+    if 'user_id' not in session:
+        flash("Please login to view your profile.")
+        return redirect(url_for('login'))
+    # Get user session
+    user_id = session['user_id']
+    user = User.query.filter_by(id=user_id).first()
+    if request.method == 'POST':
+        # get form data
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        # Validate form data
+        if len(first_name) < 2:
+            flash("Your first name is too short to be valid.")
+            return redirect(url_for('edit_profile'))
+        if len(last_name) < 2:
+            flash("Your last name is too short to be valid.")
+            return redirect(url_for('edit_profile'))
+        if len(email) < 5:
+            flash("Your email is too short to be valid.")
+            return redirect(url_for('edit_profile'))
+        # update user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        # commit changes
+        db.session.commit()
+        flash("Profile updated successfully!")
+        return redirect(url_for('profile'))
+    return render_template(
+        'edit-profile.html', title="Edit Profile", user=user)
 
 
 # Admin Page

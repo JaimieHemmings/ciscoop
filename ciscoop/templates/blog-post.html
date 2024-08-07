@@ -14,4 +14,50 @@
       </div>
     </div>
   </section>
+  <section class="blog-comments">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="sub-title mt-3 mb-3">Comments</h2>
+          <hr>
+          <ul class="comments-list">
+            {% for comment in comments %}
+              <li class="comment mt-3">
+                <p class="focus-text mt-1 mb-3">{{ comment.username }} - {{ comment.created.strftime('%Y-%m-%d') }}</p>
+                <p>{{ comment.content }}</p>
+              </li>
+              <li>
+                <hr>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Only show if user is logged in -->
+   {% if user_id %}
+  <section class="comment-form container mt-5">
+    <form action="{{url_for('blog_post', slug=post.slug)}}" method="POST">
+      <fieldset>
+        <legend><h2 class="sub-title">Add Comment</h2></legend>
+        <label for="comment" class="form-label mt-3">Comment</label>
+        <textarea
+          class="form-control mb-3"
+          id="comment"
+          name="comment"
+          placeholder="Enter your comment"
+          minlength="5"
+          maxlength="200"
+          required></textarea>
+        <button type="submit" class="btn btn-primary mt-3">Submit Comment</button>
+      </fieldset>
+    </section>
+    {% else %}
+    <section class="container mt-5">
+      <p class="comment-form-cta">Please Login to add a comment.</p>
+      <a class="btn btn-primary mt-3" href="{{ url_for('login') }}">login</a>
+    </section>
+    {% endif %}
+  </form>
 {% endblock %}

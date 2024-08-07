@@ -74,6 +74,13 @@ img {
   font-style: normal;
 }
 
+.btn-primary svg {
+  width: 20px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  display: inline;
+}
+
 .btn-primary:hover {
   background-color: #eb5939;
   color: #0d0d0d;

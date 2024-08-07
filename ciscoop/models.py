@@ -10,6 +10,8 @@ class User(db.Model):
     role = db.Column(
         db.String(20), unique=False, nullable=False, default="user")
     created = db.Column(db.DateTime, server_default=db.func.now())
+    first_name = db.Column(db.String(20), unique=False, nullable=True)
+    last_name = db.Column(db.String(20), unique=False, nullable=True)
 
     def __repr__(self):
         # return a string representation of the object
@@ -44,3 +46,19 @@ class Message(db.Model):
     def __repr__(self):
         # return a string representation of the object
         return '<Message %r>' % self.title
+
+
+class Comment(db.Model):
+    # schema for Comment model
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = db.relationship(
+        'User', backref=db.backref('Comment', lazy=True))
+    content = db.Column(db.String(280), unique=False, nullable=False)
+    created = db.Column(db.DateTime, server_default=db.func.now())
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    post = db.relationship('Post', backref=db.backref('Comment', lazy=True))
+
+    def __repr__(self):
+        # return a string representation of the object
+        return '<Comment %r>' % self.name
