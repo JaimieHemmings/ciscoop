@@ -1,6 +1,6 @@
 # CI/Scoop
 
-CI/Scoop was developed as for me as a developer to share my thoughts, opinions and projects. Users are able to register an account and send messages to me using the form on the contact page. As an admin of the site I am able to Create, Edit and Delete blog posts. The website employs a feature rich content editor for use with writing blog posts allowing the use of font sizing, italics, bold fonts, lists, externally hosted images etc.
+CI/Scoop was developed for me as a developer to share my thoughts, opinions and projects. Users are able to register an account and send messages to me using the form on the contact page. As an admin of the site I am able to Create, Edit and Delete blog posts. The website employs a feature rich content editor for use with writing blog posts allowing the use of font sizing, italics, bold fonts, lists, externally hosted images etc.
 
 ![Preview of Website](documentation/img/preview.jpg)
 
@@ -68,6 +68,7 @@ The choice to make this project was influenced by my need for a blogging platfor
 - Website needs to include full CRUD functionality
 - Guests will be able to view and navigate public sections of the website
 - Guests will be able to send a message to the admins using the form on the contact page
+- Registered users will be able to add comments to articles
 - Admins will be able to create, edit and delete blog posts
 - Admins will be able to read and delete messages sent by the contact form
 - Present information in an easy to read manner
@@ -100,6 +101,7 @@ As a registered or returning visitor I want to be able to:
 
 - Easily find new content
 - Send a message to the site owner/admin
+- Comment on blog posts
 - Browse new blog posts
 
 #### Site Admin Goals
@@ -132,6 +134,8 @@ When planning the scope of the project I created a Viability Analysis of the fea
 | 10  | User Profile Page Functionality        | 2          | 5         |
 | 11  | Search for Blog Posts                  | 1          | 4         |
 | 12  | User Action Validation                 | 5          | 5         |
+| 13  | Manage my profile                      | 1          | 4         |
+| 13  | Comment on Articles                    | 4          | 4         |
 
 Based on the premise of creating a minimally viable product I have decided to focus on implementing only the core functionality for the application to meet the minimum required specifications for functionality. This means on the initial development sprint I will be implementing features 1, 2, 3, 4, 5 and 12.
 
@@ -139,7 +143,9 @@ Based on the premise of creating a minimally viable product I have decided to fo
 
 - Clean and thematically cohesive design
 - Functional and aesthetic presentation of blog posts
+- Feature rich text editor for writing articles
 - Login/logout functionality
+- Manage profile
 - Full CRUD functionality
 - Defensive programming usage to safeguard the database from malicious or erroneous input
 - Appropriate handling of error messages
@@ -164,9 +170,9 @@ Below are diagrams illustrating the pages that are accessible for users based on
 
 ## Database Schema & Structure
 
-The CI/Scoop website runs from a single database with multiple tables. One table for the management of users, a table for blog posts and another table for messages.
+The CI/Scoop website runs from a single database with multiple tables. One table for the management of users, a table for blog posts, a table for comments and another table for messages.
 
-Only users with admin privileges can modify or delete any data. The diagram below (ERD) shows the relationships between these tables.
+Only users with admin privileges can modify or delete any data. All users can create and read data. The diagram below (ERD) shows the relationships between these tables.
 
 ![ERD For Database](documentation/img/ERD.jpg)
 
@@ -231,6 +237,7 @@ A breakdown of the various elements and their implementation across the website.
 
 - Chronologically sorted Blog Posts
 - Pagination
+- Comments on Articles
 
 **Contact**
 
@@ -255,7 +262,7 @@ Below is a table of CRUD functionality for each relevant page:
 | Blog            |                   | Fetch paginated blog posts                |                                 |                   |
 | Contact         | Submit Message    |                                           |                                 |                   |
 | Admin           | Create Blog Posts |                                           |                                 |                   |
-| Edit Post       |                   |                                           | Edit specific blog post content |                   |
+| Edit Post       | Submit Comment    | Read Comments                             | Edit Article content            |                   |
 | Blog Management |                   |                                           |                                 | Delete Blog Posts |
 | View Messages   |                   | Read messages submitted from contact page |                                 | Delete Messages   |
 | Login           |                   | Check password hash                       |                                 |                   |
@@ -316,11 +323,11 @@ I have implemented the following handlers in order to catch and gracefully redir
 
 # Future Implementation
 
-- Expanding the user profile by allowing the user to add and edit their profile information such as first name, last name, sate of birth etc.
+- Expanding the user profile by allowing the user to add to, and edit their profile information such as date of birth etc.
 - Allow registered users to delete their own accounts
 - Allowing the uploading of images
-- Allow user comments on blog posts
-- Provide a user interface for the moderating of ragistered users
+- Provide a user interface for the moderating of ragistered users by Admins
+- Allow Admins to moderate user comments on Articles
 
 # Testing
 
