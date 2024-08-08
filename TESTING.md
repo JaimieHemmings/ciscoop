@@ -97,7 +97,7 @@ As you can see the text is actually white. It has a hover state where the backgr
 | Login                  | A registered User should be able to log in using the correct credentials                       | Pass   |
 | Logout                 | A logged in user should be able to log out successfully                                        | Pass   |
 | Register               | A guest should be able to register an account on the register page                             | Pass   |
-| No Duplicate Usernames | User should receive an apprpriate error if their chosen username address is already registered | Pass   |
+| No Duplicate Usernames | User should receive an apprpriate error if their chosen username is already registered         | Pass   |
 | No Duplicate emails    | User should receive an apprpriate error if their email address is already registered           | Pass   |
 | Navbar links update    | the Nav Menu links should update based on the state of the user session                        | Pass   |
 
