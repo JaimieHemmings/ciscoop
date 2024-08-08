@@ -372,8 +372,22 @@ for (let i = 0; i < deleteConfirm.length; i++) {
 
 ```
 
+- During testing a friend encountered an error page while exploring the site. He stated his steps to receiving the error as follows:
+  - Leave a comment on an article
+  - View the profile page
+  - Navigate to the contact page
+The error message he receieved is as below:
+![unsupported operand type(s) for +: 'NoneType' and 'str'](documentation/img/concatenation-error.png)
+This error is produced because of insufficient defensive programming resulting in the attempted concatenation of an unassigned variable.
+  - In order to resolve any further instances of this error I added a check to see if a first and last name were available for the user session before, if not the variable would be assigned `None` rather than being left empty.
+```
 
+if user.first_name and user.last_name:
+    full_name = user.first_name + " " + user.last_name
+else:
+    full_name = None
 
+```
 # Deployment and Local Development
 
 ## Deployment to Heroku

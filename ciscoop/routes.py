@@ -102,7 +102,10 @@ def contact():
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).first()
         user_email = user.email
-        full_name = user.first_name + " " + user.last_name
+        if user.first_name and user.last_name:
+            full_name = user.first_name + " " + user.last_name
+        else:
+            full_name = None
     else:
         full_name = None
         user_email = None
@@ -186,6 +189,11 @@ def register():
         # Check the password confirmation matches
         if password != confirm_password:
             flash("Passwords do not match. Please try again.")
+            return redirect(url_for('register'))
+        # Ensure email address is not already used
+        email_check = User.query.filter_by(email=email).first()
+        if email_check:
+            flash("Email address already in use. Please try again.")
             return redirect(url_for('register'))
         # create new user
         new_user = User(
