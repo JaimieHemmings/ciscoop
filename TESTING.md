@@ -82,22 +82,24 @@ As you can see the text is actually white. It has a hover state where the backgr
 
 # Manual testing
 
-| Test                | Goal                                                                                          | Result |
-| ------------------- | --------------------------------------------------------------------------------------------- | ------ |
-| Responsiveness      | Website to be responsive across all screen sizes                                              | Pass   |
-| Flash Messages      | Flash messages give feedback to user when actions like Logging in are undertaken              | Pass   |
-| Nav Links           | All navigational links direct user to appropriate pages without any errors                    | Pass   |
-| Article Creation    | Admin Users can create Blog Posts without errors                                              | Pass   |
-| Edit Articles       | Admin can edit articles without errors                                                        | Pass   |
-| Delete Articles     | Admin can delete articles without errors                                                      | Pass   |
-| Priviledged access  | Users without permissions get redirected from priviledged pages                               | Pass   |
-| Form Submission     | A user of any state should be able to successfully submit the form on the contact page        | Pass   |
-| Read Messages       | An Admin user should be able to access and delete all messages submitted via the contact Form | Pass   |
-| Delete Messages     | An Admin User should be able to Delete Messages submitted via the Contact Form                | Pass   |
-| Login               | A registered User should be able to log in using the correct credentials                      | Pass   |
-| Logout              | A logged in user should be able to log out successfully                                       | Pass   |
-| Register            | A guest should be able to register an account on the register page                            | Pass   |
-| Navbar links update | the Nav Menu links should update based on the state of the user session                       | Pass   |
+| Test                   | Goal                                                                                           | Result |
+| ---------------------- | ---------------------------------------------------------------------------------------------- | ------ |
+| Responsiveness         | Website to be responsive across all screen sizes                                               | Pass   |
+| Flash Messages         | Flash messages give feedback to user when actions like Logging in are undertaken               | Pass   |
+| Nav Links              | All navigational links direct user to appropriate pages without any errors                     | Pass   |
+| Article Creation       | Admin Users can create Blog Posts without errors                                               | Pass   |
+| Edit Articles          | Admin can edit articles without errors                                                         | Pass   |
+| Delete Articles        | Admin can delete articles without errors                                                       | Pass   |
+| Priviledged access     | Users without permissions get redirected from priviledged pages                                | Pass   |
+| Form Submission        | A user of any state should be able to successfully submit the form on the contact page         | Pass   |
+| Read Messages          | An Admin user should be able to access and delete all messages submitted via the contact Form  | Pass   |
+| Delete Messages        | An Admin User should be able to Delete Messages submitted via the Contact Form                 | Pass   |
+| Login                  | A registered User should be able to log in using the correct credentials                       | Pass   |
+| Logout                 | A logged in user should be able to log out successfully                                        | Pass   |
+| Register               | A guest should be able to register an account on the register page                             | Pass   |
+| No Duplicate Usernames | User should receive an apprpriate error if their chosen username address is already registered | Pass   |
+| No Duplicate emails    | User should receive an apprpriate error if their email address is already registered           | Pass   |
+| Navbar links update    | the Nav Menu links should update based on the state of the user session                        | Pass   |
 
 # User Story testing
 
