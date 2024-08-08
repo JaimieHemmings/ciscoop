@@ -320,6 +320,8 @@ I have implemented the following handlers in order to catch and gracefully redir
   - A media conversion tool
 - [Flowbite](https://flowbite.com/icons/)
   - An online collection of Icon SVG's
+- [ImgBB](https://imgbb.com/)
+  - Used for hosting images used on the blog articles
 
 # Future Implementation
 
