@@ -25,7 +25,7 @@
                       <h3>{{ post.title }}</h3>
                       <p class="mt-1 mb-3">
                         <!-- Display truncated content with HTML formatting -->
-                        {{ post.content|truncate(50,true,'...')|safe }}
+                        {{ post.preview|truncate(50,true,'...')|safe }}
                       </p>
                     </div>
                     <div class="col-sm-4 d-flex flex-column justify-content-center">
