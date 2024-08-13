@@ -49,6 +49,7 @@
     <form action="{{url_for('blog_post', slug=post.slug)}}" method="POST">
       <fieldset>
         <legend><h2 class="sub-title">Add Comment</h2></legend>
+        {{submitted_comment}}
         <label for="comment" class="form-label mt-3">Comment</label>
         <textarea
           class="form-control mb-3"
@@ -57,7 +58,7 @@
           placeholder="Enter your comment"
           minlength="5"
           maxlength="200"
-          required></textarea>
+          required>{% if submitted_comment%}{{submitted_comment}}{% endif %}</textarea>
         <button type="submit" class="btn btn-primary mt-3">Submit Comment</button>
       </fieldset>
     </section>

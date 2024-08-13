@@ -6,26 +6,29 @@ from flask_sqlalchemy import Pagination
 import re
 
 
-# Index page
 @app.route('/')
 @app.route('/index')
 def home():
-    # Get 3 latest blog posts
+    """
+    Index page
+    This is the main page of the website.
+    It displays the 3 most recent blog posts.
+    The posts are ordered by the date they were created in descending order.
+    """
     latest_posts = Post.query.order_by(Post.created.desc()).limit(3).all()
     return render_template('index.html', title="Home", posts=latest_posts)
 
 
-# Blog page
 @app.route('/blog')
 def blog():
-    # Implement SQLAlchemy pagination for Blog Page
+    """
+    Blog page
+    Implement SQLAlchemy pagination for Blog Page
+    Then get the current page of posts and then the prev/next URLs
+    """
     page = request.args.get('page', 1, type=int)
-    # Get current page of posts
     curr_posts = Post.query.order_by(
         Post.created.desc()).paginate(page=page, per_page=5)
-    if len(curr_posts.items) == 0:
-        curr_posts = ""
-    # Get next and previous page URLs
     next_url = url_for(
         'blog', page=curr_posts.next_num) if curr_posts.has_next else None
     prev_url = url_for(
@@ -37,59 +40,66 @@ def blog():
         prev_url=prev_url)
 
 
-# Individual Blog Posts
 @app.route('/blog/<slug>', methods=['GET', 'POST'])
 def blog_post(slug):
+    """
+    Individual Blog post
+    Check if the requested post exists and if not return a 404 error.
+    """
+
+    post = Post.query.filter_by(slug=slug).first()
+    if post is None:
+        return render_template('404.html', title="Uh oh! Error: 404"), 404
+
+    """
+    Get the form data in the case a user is returned to this page after
+    submitting a comment that didn't pass validation
+    """
     if request.method == 'POST':
-        # if user is not in session
+        # Ensure user is logged in before commenting
+
         if 'user_id' not in session:
             flash("Please login to comment on this post.")
             return redirect(url_for('login'))
-        # get form data
-        comment = request.form['comment']
-        username = session['username']
-        user_id = session['user_id']
-        # Get the post_id
-        post_id = Post.query.filter_by(slug=slug).first().id
-        # Validate form data
-        if len(comment) < 5 or len(comment) > 200:
+        submitted_comment = request.form.get('comment')
+        username = session.get('username')
+        user_id = session.get('user_id')
+
+        # Validate the comment
+        if len(submitted_comment) < 5 or len(submitted_comment) > 200:
             flash(
                 "Comment must be greater than 5 characters"
                 " and less than 200 characters.")
-            return redirect(url_for('blog_post', slug=slug))
-        # create new comment
+            return redirect(url_for(
+                'blog_post',
+                slug=slug,
+                submitted_comment=submitted_comment)
+            )
+
+        # Create new comment
         new_comment = Comment(
-            content=comment,
-            post_id=post_id,
+            content=submitted_comment,
+            post_id=post.id,
             user_id=user_id,
             username=username)
-        # add new comment to database
+
+        # Add new comment to database
         db.session.add(new_comment)
         db.session.commit()
         flash("Comment added successfully!")
         return redirect(url_for('blog_post', slug=slug))
-    # Get post by slug
-    post = Post.query.filter_by(slug=slug).first()
-    # Check if post exists
-    if post is None:
-        # Return 404 page
-        return render_template('404.html', title="Uh oh! Error: 404"), 404
-    # Get all comments for post
+
+    # Get all comments for the post
     comments = Comment.query.filter_by(post_id=post.id).all()
-    if len(comments) == 0:
-        comments = ""
-    # Get user details to autofill comment form
-    if 'user_id' in session:
-        user_id = session['user_id']
-        user = User.query.filter_by(id=user_id).first()
-        username = user.username
+
     return render_template(
         'blog-post.html',
-        title="Blog Post",
-        user_id=user_id if 'user_id' in session else None,
+        title=f"Blog Post - {post.title}",
         post=post,
         comments=comments,
-        username=username if 'user_id' in session else None)
+        user_id=session.get('user_id'),
+        submitted_comment=request.args.get('submitted_comment')
+    )
 
 
 # Contact page
