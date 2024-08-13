@@ -338,9 +338,7 @@ Comprehensive testing documentation can be found in the [testing document](TESTI
 ## Bugs, Issues and Solutions
 
 - CKEditor Waring
-
-![CKEditor Warning](documentation/img/ckeditor-warning.png)
-
+  - ![CKEditor Warning](documentation/img/ckeditor-warning.png)
   - CKEditor is giving an error/warning stating it is not secure when rendering the CKEditor textarea. Upon checking for newer versions of Flask-CKEditor, of which CKEditor is a dependency, I found that the package has not been updated for several months. This is not a major concern as only registered admins will have access to the CKEditor forms but in a future version of CI/Scoop I would look to remove the Flask-CKEditor dependency and manually implement CKEditor if they havn't updated it to use a newer version of CKEditor yet.
 
 - I am a big proponent of autofilling data to improve the user experience wherever possible, therefore when I created the contact form I wanted to autofill it with any appropriate information from the user profile when they were logged in. To this end when I rendered the contact page in my `routes.py` file I was passing a user_email variable to the template. It wasn't until much later on when I was testing that I found this caused an issue when there was no active session. In this case the page was unable to render with the error message <br> `UnboundLocalError: cannot access local variable 'user_email' where it is not associated with a value`.<br> In this case the variable was undefined and caused the issue.
