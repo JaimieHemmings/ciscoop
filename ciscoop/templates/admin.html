@@ -48,32 +48,20 @@
         <form method="POST" action="{{ url_for('admin') }}">
           <fieldset>
             <legend><h2 class="sub-title">Add a new blog post</h2></legend>
-            <label for="title" class="form-label">Title</label>
-            <input
-              type="text"
-              class="form-control"
-              id="title"
-              name="title"
-              placeholder="Enter a title"
-              minlength="5"
-              maxlength="50"
-              required
-            />
-            <label for="preview" class="form-label mt-3">Preview</label>
-            <input
-              type="text"
-              class="form-control"
-              id="preview"
-              name="preview"
-              placeholder="Enter a preview"
-              minlength="5"
-              maxlength="50"
-              required
-            />
-            <label for="ckeditor" class="form-label mt-3">Content</label>
-            <!-- Invoke CKEditor Functionality -->
-            {{ ckeditor.create() }}
-            <button type="submit" class="btn btn-primary mt-3">Add Post</button>
+
+            {{ form.hidden_tag() }}
+
+            {{ form.title.label }}
+            {{ form.title(class="form-control mt-3 mb-3") }}
+
+            {{ form.preview.label }}
+            {{ form.preview(class="form-control mt-3 mb-3") }}
+
+            {{ form.content.label }}
+            {{ form.content(class="form-control mt-3 mb-3") }}
+
+            {{ form.submit(class="btn btn-primary mt-3") }}
+
           </fieldset>
       </div>
     </div>

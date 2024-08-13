@@ -15,35 +15,20 @@
     <form action="{{url_for('edit_post', id=post.id)}}" method="POST">
       <fieldset>
         <legend><h2 class="sub-title">Edit Post</h2></legend>
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          name="title"
-          placeholder="Enter a title"
-          minlength="5"
-          maxlength="50"
-          required
-          value="{{ post.title }}"
-        />
-        <label for="preview" class="form-label mt-3">Preview</label>
-        <input
-          type="text"
-          class="form-control"
-          id="preview"
-          name="preview"
-          placeholder="Enter a preview"
-          minlength="5"
-          maxlength="50"
-          value="{{ post.preview }}"
-          required
-        />
-        <div class="mb-3">
-          <label for="ckeditor" class="form-label mt-3">Content</label>
-          {{ ckeditor.create(value=post.content) }}
-        </div>
-        <button type="submit " class="btn btn-primary">Submit Changes</button>
+
+        {{ form.hidden_tag() }}
+
+        {{ form.title.label }}
+        {{ form.title(class="form-control mt-3 mb-3") }}
+
+        {{ form.preview.label }}
+        {{ form.preview(class="form-control mt-3 mb-3") }}
+
+        {{ form.content.label(class="mb-3") }}
+        {{ form.content(class="form-control") }}
+        
+        {{ form.submit(class="btn btn-primary mt-3") }}
+
       </fieldset>
     </form>
   </section>

@@ -1,15 +1,32 @@
 from ciscoop import app, db
+from functools import wraps
 from forms import (
   ContactForm,
   LoginForm,
   RegisterForm,
-  EditProfileForm)
+  EditProfileForm,
+  AddArticleForm,
+  Edit_Articles_Form)
 from flask import (
     render_template, redirect, url_for, flash, request, session)
 from ciscoop.models import User, Post, Message, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import Pagination  # noqa
 import re
+
+
+def login_required(f):
+    """
+    Decorator function to check if a user is logged in.
+    If the user is not logged in, they are redirected to the login page.
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash("You need to be logged in to view this page")
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/')
@@ -111,6 +128,7 @@ def blog_post(slug):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
 
+    form_message = ""
     form = ContactForm()
 
     if request.method == 'POST':
@@ -140,7 +158,8 @@ def contact():
     return render_template(
         'contact.html',
         title="Contact",
-        form=form)
+        form=form,
+        form_message=request.args.get('form_message'))
 
 
 # Login page
@@ -232,11 +251,8 @@ def register():
 
 # Profile page
 @app.route('/profile')
+@login_required
 def profile():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -245,18 +261,12 @@ def profile():
 
 # Edit Profile Page
 @app.route('/profile/edit', methods=['GET', 'POST'])
+@login_required
 def edit_profile():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
 
     form = EditProfileForm()
 
-    # Autofill form with user data
-    
-
-    # Get user session
+    # Get user information
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
 
@@ -267,7 +277,6 @@ def edit_profile():
             user.last_name = form.last_name.data
             user.email = form.email.data
 
-            # Update User
             db.session.commit()
             flash("Profile updated successfully!")
             return redirect(url_for('profile'))
@@ -277,75 +286,66 @@ def edit_profile():
                     for error in errors:
                         flash(f"{error}")
             return redirect(url_for('edit_profile'))
-    
+
     return render_template(
-        'edit-profile.html', title="Edit Profile", user=user, form=form)    
+        'edit-profile.html', title="Edit Profile", user=user, form=form)
 
 
-# Admin Page
 @app.route('/profile/admin', methods=['GET', 'POST'])
+@login_required
 def admin():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
+    """ Admin Page """
+    # Check user is an admin
+    user = User.query.filter_by(id=session['user_id']).first()
+    if user.role != "admin":
+        flash("You do not have permission to access this page.")
+        return redirect(url_for('home'))
+    
+    form = AddArticleForm()
+
     if request.method == 'POST':
-        # Get user session
+    
+    # Get user session
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).first()
-        # Check user is an admin
-        if user.role != "admin":
-            flash("You do not have permission to access this page.")
-            return redirect(url_for('home'))
-        # get form data
-        title = request.form['title']
-        content = request.form.get('ckeditor')
-        slug = title.lower().replace(" ", "-")
-        preview = request.form['preview']
-        # Validate data from form
-        if len(title) < 3:
-            flash("Please create a more descriptive title")
+
+        # Validate Form Data
+        if form.validate_on_submit():
+            form_data = request.form
+            new_post = Post(
+                title=form_data['title'],
+                content=form_data['content'],
+                preview=form_data['preview'],
+                user_id=user_id,
+                slug=form_data['title'].lower().replace(" ", "-"),
+                user=user)
+            
+            db.session.add(new_post)
+            db.session.commit()
+            flash("Post created successfully!")
             return redirect(url_for('admin'))
-        if len(content) < 100:
-            flash("A blog post needs to be longer than 100 characters")
-            return redirect(url_for('admin'))
-        if len(preview) < 5:
-            flash("Please create a more descriptive preview string")
-            return redirect(url_for('admin'))
-        # create new post
-        new_post = Post(
-            title=title,
-            content=content,
-            preview=preview,
-            user_id=user_id,
-            slug=slug,
-            user=user)
-        # add new post to database
-        db.session.add(new_post)
-        db.session.commit()
-        flash("Post created successfully!")
-        return redirect(url_for('admin'))
+        
     # Get all blog posts
     all_posts = Post.query.all()
     messageData = Message.query.all()
     newMessages = len(messageData)
+
     return render_template(
         'admin.html',
         title="Admin",
         posts=all_posts,
-        newMessages=newMessages)
+        newMessages=newMessages,
+        form=form)
 
 
-# Edit posts list
 @app.route('/profile/admin/edit-posts/', methods=['GET', 'POST'])
+@login_required
 def posts_list():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
+    """ Edit posts list """
     # Get user session
-    user_id = session['user_id']
-    user = User.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=session['user_id']).first()
     # Check user is an admin
     if user.role != "admin":
         flash("You do not have permission to access this page.")
@@ -372,13 +372,11 @@ def posts_list():
         prev_url=prev_url)
 
 
-# Edit Post
 @app.route('/profile/admin/edit-post/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_post(id):
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
+    """ Edit Post """
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -386,35 +384,41 @@ def edit_post(id):
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
-    # Get post by id
+
+    form = Edit_Articles_Form()
+
     post = Post.query.filter_by(id=id).first()
-    if post is None:
-        post = ""
+
+    form.content.data = post.content
+
     if request.method == 'POST':
-        # get form data
-        title = request.form['title']
-        content = request.form.get('ckeditor')
-        slug = title.lower().replace(" ", "-")
-        preview = request.form['preview']
-        # update post
-        post.title = title
-        post.preview = preview
-        post.content = content
-        post.slug = slug
-        # commit changes
-        db.session.commit()
-        flash("Post updated successfully!")
-        return redirect(url_for('posts_list'))
-    return render_template('edit-post.html', title="Edit Post", post=post)
+        # Validate Form Data
+        if form.validate_on_submit():
+            form_data = request.form
+            post = Post.query.filter_by(id=id).first()
+            post.title = form_data['title']
+            post.preview = form_data['preview']
+            post.content = form_data['content']
+            post.slug = form_data['title'].lower().replace(" ", "-")
+            db.session.commit()
+            flash("Post updated successfully!")
+            return redirect(url_for('posts_list'))
+        else:
+            if form.errors:
+                for errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{error}")
+            return redirect(url_for('edit_post', id=id))
+
+    return render_template(
+        'edit-post.html', title="Edit Post", post=post, form=form)
 
 
 # Delete Post
 @app.route('/profile/admin/delete-post/<int:id>')
+@login_required
 def delete_post(id):
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -433,11 +437,9 @@ def delete_post(id):
 
 # Messages Page
 @app.route('/admin/messages', methods=['GET', 'POST'])
+@login_required
 def messages_page():
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -457,11 +459,9 @@ def messages_page():
 
 # Delete Message
 @app.route('/admin/messages/delete/<int:id>')
+@login_required
 def delete_message(id):
-    # Check if user is logged in
-    if 'user_id' not in session:
-        flash("Please login to view your profile.")
-        return redirect(url_for('login'))
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -528,3 +528,21 @@ def internal_server_error(e):
         '500.html',
         title="Uh oh! Error: 500",
         error_message=e), 500
+
+
+# Handle Method Not Allowed Error
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return render_template(
+        '405.html',
+        title="Uh oh! Error: 405",
+        error_message=e), 405
+
+
+# Handle Forbidden Error
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template(
+        '403.html',
+        title="Uh oh! Error: 403",
+        error_message=e), 403
