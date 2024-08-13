@@ -19,10 +19,10 @@
         {{ form.hidden_tag() }}
 
         {{ form.title.label }}
-        {{ form.title(class="form-control mt-3 mb-3") }}
+        {{ form.title(class="form-control mt-3 mb-3", value=post.title) }}
 
         {{ form.preview.label }}
-        {{ form.preview(class="form-control mt-3 mb-3") }}
+        {{ form.preview(class="form-control mt-3 mb-3", value=post.preview) }}
 
         {{ form.content.label(class="mb-3") }}
         {{ form.content(class="form-control") }}
