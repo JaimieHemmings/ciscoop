@@ -1,8 +1,14 @@
-from flask import render_template, request, redirect, url_for, flash, session
 from ciscoop import app, db
+from forms import (
+  ContactForm,
+  LoginForm,
+  RegisterForm,
+  EditProfileForm)
+from flask import (
+    render_template, redirect, url_for, flash, request, session)
 from ciscoop.models import User, Post, Message, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import Pagination
+from flask_sqlalchemy import Pagination  # noqa
 import re
 
 
@@ -102,122 +108,126 @@ def blog_post(slug):
     )
 
 
-# Contact page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
-    # If the user is logged in set the form email value to the user's email
-    if 'user_id' in session:
-        user_id = session['user_id']
-        user = User.query.filter_by(id=user_id).first()
-        user_email = user.email
-        if user.first_name and user.last_name:
-            full_name = user.first_name + " " + user.last_name
-        else:
-            full_name = None
-    else:
-        full_name = None
-        user_email = None
+    form = ContactForm()
+
     if request.method == 'POST':
-        # get form data
-        name = request.form['name']
-        email = request.form['email']
-        title = request.form['title']
-        message = request.form['message']
         # Validate Form Data
-        if len(name) < 2:
-            flash("Your name is too short to be valid.")
-            return redirect(url_for('contact'))
-        if len(email) < 5:
-            flash("Your email is too short to be valid.")
+        if form.validate_on_submit():
+            form_name = form.name.data
+            form_email = form.email.data
+            form_title = form.title.data
+            form_message = form.message.data
+            new_message = Message(
+                name=form_name,
+                email=form_email,
+                title=form_title,
+                content=form_message
+            )
+            db.session.add(new_message)
+            db.session.commit()
+            flash("Message sent successfully!")
             return redirect(url_for('contact'))
         else:
-            if not re.match(regex, email):
-                flash("Invalid email address. Please try again.")
-                return redirect(url_for('contact'))
-        if len(title) < 3:
-            flash("The title must be longer than 3 characters.")
+            if form.errors:
+                for errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{error}")
             return redirect(url_for('contact'))
-        if len(message) < 5 or len(message) > 280:
-            flash(
-                "Message must be greater than 5 "
-                "characters and less than 280 characters.")
-            return redirect(url_for('contact'))
-        # create new message
-        new_message = Message(
-            name=name, email=email, content=message, title=title)
-        # add new message to database
-        db.session.add(new_message)
-        db.session.commit()
-        flash("Message sent successfully!")
-        return redirect(url_for('contact'))
+
     return render_template(
         'contact.html',
         title="Contact",
-        user_email=user_email,
-        full_name=full_name)
+        form=form)
 
 
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    # Redirect user if already in session
+    if 'user_id' in session:
+        flash("You are already logged in.")
+        return redirect(url_for('home'))
+
+    form = LoginForm()
+
     if request.method == 'POST':
-        # get form data
-        username = request.form['username']
-        password = request.form['password']
-        # Check if user exists
-        user = User.query.filter_by(username=username).first()
-        # Check if password matches
-        if user and check_password_hash(user.password, password):
-            # Create session with user id
-            session['user_id'] = user.id
-            session['username'] = user.username
-            session['role'] = user.role
-            flash(f"Login successful! Welcome {user.username}.")
-            return redirect(url_for('home'))
-        else:
-            flash("Incorrect username or password. Please try again.")
-            return redirect(url_for('login'))
-    return render_template('login.html', title="Login")
+        if form.validate_on_submit():
+            # get form data
+            username = form.username.data
+            password = form.password.data
+            # Check if user exists
+            user = User.query.filter_by(username=username).first()
+            # Check if password matches
+            if user and check_password_hash(user.password, password):
+                # Create session with user id
+                session['user_id'] = user.id
+                session['username'] = user.username
+                session['role'] = user.role
+                flash(f"Login successful! Welcome {user.username}.")
+                return redirect(url_for('home'))
+            else:
+                flash("Incorrect email or password. Please try again.")
+                return redirect(url_for('login'))
+
+    return render_template('login.html', title="Login", form=form)
 
 
 # Register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+
+    # Redirect user if already in session
+    if 'user_id' in session:
+        flash("You are already logged in.")
+        return redirect(url_for('home'))
+
+    form = RegisterForm()
+
     if request.method == 'POST':
-        # get form data
-        username = request.form['username']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-        email = request.form['email']
-        # Check if user already exists
-        user = User.query.filter_by(username=username).first()
-        if user:
-            flash("Username already exists. Please try again.")
+        if form.validate_on_submit():
+            # get form data
+            username = form.username.data
+            password = form.password.data
+            confirm_password = form.confirm_password.data
+            email = form.email.data
+            # Check if user already exists
+            user = User.query.filter_by(username=username).first()
+            if user:
+                flash("Username already exists. Please try again.")
+                return redirect(url_for('register'))
+            # Check the password confirmation matches
+            if password != confirm_password:
+                flash("Passwords do not match. Please try again.")
+                return redirect(url_for('register'))
+            # Ensure email address is not already used
+            email_check = User.query.filter_by(email=email).first()
+            if email_check:
+                flash("Email address already in use. Please try again.")
+                return redirect(url_for('register'))
+            # create new user
+            new_user = User(
+                username=username,
+                password=generate_password_hash(password),
+                email=email,
+                role="user")
+            # add new user to database
+            db.session.add(new_user)
+            db.session.commit()
+            flash("User created successfully! Please Login.")
+            # redirect to login page
+            return redirect(url_for('login'))
+        else:
+            if form.errors:
+                for errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{error}")
             return redirect(url_for('register'))
-        # Check the password confirmation matches
-        if password != confirm_password:
-            flash("Passwords do not match. Please try again.")
-            return redirect(url_for('register'))
-        # Ensure email address is not already used
-        email_check = User.query.filter_by(email=email).first()
-        if email_check:
-            flash("Email address already in use. Please try again.")
-            return redirect(url_for('register'))
-        # create new user
-        new_user = User(
-            username=username,
-            password=generate_password_hash(password),
-            email=email,
-            role="user")
-        # add new user to database
-        db.session.add(new_user)
-        db.session.commit()
-        flash("User created successfully! Please Login.")
-        # redirect to login page
-        return redirect(url_for('login'))
-    return render_template('register.html', title="Register")
+
+    return render_template('register.html', title="Register", form=form)
 
 
 # Profile page
@@ -240,34 +250,36 @@ def edit_profile():
     if 'user_id' not in session:
         flash("Please login to view your profile.")
         return redirect(url_for('login'))
+
+    form = EditProfileForm()
+
+    # Autofill form with user data
+    
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
+
     if request.method == 'POST':
-        # get form data
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        email = request.form['email']
-        # Validate form data
-        if len(first_name) < 2:
-            flash("Your first name is too short to be valid.")
+        # Validate form Data
+        if form.validate_on_submit():
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.email = form.email.data
+
+            # Update User
+            db.session.commit()
+            flash("Profile updated successfully!")
+            return redirect(url_for('profile'))
+        else:
+            if form.errors:
+                for errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{error}")
             return redirect(url_for('edit_profile'))
-        if len(last_name) < 2:
-            flash("Your last name is too short to be valid.")
-            return redirect(url_for('edit_profile'))
-        if len(email) < 5:
-            flash("Your email is too short to be valid.")
-            return redirect(url_for('edit_profile'))
-        # update user
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        # commit changes
-        db.session.commit()
-        flash("Profile updated successfully!")
-        return redirect(url_for('profile'))
+    
     return render_template(
-        'edit-profile.html', title="Edit Profile", user=user)
+        'edit-profile.html', title="Edit Profile", user=user, form=form)    
 
 
 # Admin Page

@@ -18,56 +18,23 @@
     <form method="POST" action="{{ url_for('contact') }}">
       <fieldset>
         <legend class="sub-title">Contact Form</legend>
-        <label for="name" class="form-label">Your name:</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          class="form-control"
-          placeholder="Enter your name"
-          minlength="5"
-          maxlength="50"
-          value="{% if full_name %}{{ full_name }}{% endif %}"
-          required
-        />
-        <label for="email" class="form-label mt-3">Your email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          class="form-control"
-          placeholder="Your email"
-          {% if user_email %}
-            value="{{ user_email }}"
-          {% endif %}
-          minlength="5"
-          maxlength="50"
-          required
-        />
-        <label for="title" class="form-label mt-3">Subject:</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          class="form-control"
-          placeholder="Message Title"
-          minlength="5"
-          maxlength="50"
-          required
-        />
-        <label for="message" class="form-label mt-3">Your message:</label>
-        <textarea
-          id="message"
-          name="message"
-          class="form-control mb-3"
-          placeholder="Enter your message here!"
-          minlength="10"
-          maxlength="280"
-          required
-        ></textarea>
-        <button type="submit" class="btn btn-primary mt-3">
-          Send Your Message
-        </button>
+
+        {{ form.hidden_tag() }}
+        
+        {{ form.name.label }}
+        {{ form.name(class="form-control mt-3 mb-3") }}
+
+        {{ form.email.label }}
+        {{ form.email(class="form-control mt-3 mb-3") }}
+
+        {{ form.title.label }}
+        {{ form.title(class="form-control mt-3 mb-3") }}
+
+        {{ form.message.label }}
+        {{ form.message(class="form-control mt-3 mb-3") }}
+
+        {{ form.submit(class="btn btn-primary mt-3") }}
+
       </fieldset>
     </form>
   </div>

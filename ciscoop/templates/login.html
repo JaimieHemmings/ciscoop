@@ -20,24 +20,15 @@
     <form method="POST" action="{{ url_for('login') }}">
       <fieldset>
         <legend class="sub-title">Login</legend>
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          class="form-control mb-3"
-          id="username"
-          name="username"
-          placeholder="Enter your username"
-          required
-        />
-        <label for="password" class="form-label mt-3">Password</label>
-        <input
-          type="password"
-          class="form-control mb-3"
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          required
-        />
+        
+        {{ form.hidden_tag() }}
+        
+        {{ form.username.label }}
+        {{ form.username(class="form-control mt-3 mb-3") }}
+        
+        {{ form.password.label }}
+        {{ form.password(class="form-control mt-3 mb-3") }}
+
         <button type="submit" class="btn btn-primary mt-3">Login</button>
       </fieldset>
     </form>
