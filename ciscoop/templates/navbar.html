@@ -66,7 +66,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <!-- Check if active user session and show appropriate Nav Items -->
-            {% if session['user'] %}
+            {% if session %}
               <li>
                 <a
                   class="dropdown-item{{' active' if active_page == 'profile'}}"

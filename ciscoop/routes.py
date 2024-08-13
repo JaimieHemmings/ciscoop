@@ -127,7 +127,10 @@ def blog_post(slug):
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-
+    """
+    Contact Page
+    This page allows users to send a message to the site admins
+    """
     form_message = ""
     form = ContactForm()
 
@@ -162,9 +165,11 @@ def contact():
         form_message=request.args.get('form_message'))
 
 
-# Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Login Page
+    """
 
     # Redirect user if already in session
     if 'user_id' in session:
@@ -195,9 +200,11 @@ def login():
     return render_template('login.html', title="Login", form=form)
 
 
-# Register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Register page
+    """
 
     # Redirect user if already in session
     if 'user_id' in session:
@@ -249,20 +256,23 @@ def register():
     return render_template('register.html', title="Register", form=form)
 
 
-# Profile page
 @app.route('/profile')
 @login_required
 def profile():
+    """
+    Profile Page
+    """
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html', title="Profile", user=user)
 
 
-# Edit Profile Page
 @app.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    """ Edit Profile Page """
 
     form = EditProfileForm()
 
@@ -294,19 +304,19 @@ def edit_profile():
 @app.route('/profile/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
-
     """ Admin Page """
+
     # Check user is an admin
     user = User.query.filter_by(id=session['user_id']).first()
     if user.role != "admin":
         flash("You do not have permission to access this page.")
         return redirect(url_for('home'))
-    
+
     form = AddArticleForm()
 
     if request.method == 'POST':
-    
-    # Get user session
+
+        # Get user session
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).first()
 
@@ -320,12 +330,12 @@ def admin():
                 user_id=user_id,
                 slug=form_data['title'].lower().replace(" ", "-"),
                 user=user)
-            
+
             db.session.add(new_post)
             db.session.commit()
             flash("Post created successfully!")
             return redirect(url_for('admin'))
-        
+
     # Get all blog posts
     all_posts = Post.query.all()
     messageData = Message.query.all()
@@ -342,8 +352,8 @@ def admin():
 @app.route('/profile/admin/edit-posts/', methods=['GET', 'POST'])
 @login_required
 def posts_list():
-
     """ Edit posts list """
+
     # Get user session
     user = User.query.filter_by(id=session['user_id']).first()
     # Check user is an admin
@@ -375,8 +385,8 @@ def posts_list():
 @app.route('/profile/admin/edit-post/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(id):
-
     """ Edit Post """
+
     # Get user session
     user_id = session['user_id']
     user = User.query.filter_by(id=user_id).first()
@@ -414,10 +424,12 @@ def edit_post(id):
         'edit-post.html', title="Edit Post", post=post, form=form)
 
 
-# Delete Post
 @app.route('/profile/admin/delete-post/<int:id>')
 @login_required
 def delete_post(id):
+    """
+    Delete Post
+    """
 
     # Get user session
     user_id = session['user_id']
@@ -435,10 +447,12 @@ def delete_post(id):
     return redirect(url_for('posts_list'))
 
 
-# Messages Page
 @app.route('/admin/messages', methods=['GET', 'POST'])
 @login_required
 def messages_page():
+    """
+    Messages Page
+    """
 
     # Get user session
     user_id = session['user_id']
@@ -457,10 +471,12 @@ def messages_page():
         messages=messageData)
 
 
-# Delete Message
 @app.route('/admin/messages/delete/<int:id>')
 @login_required
 def delete_message(id):
+    """
+    Delete Message
+    """
 
     # Get user session
     user_id = session['user_id']
@@ -478,70 +494,85 @@ def delete_message(id):
     return redirect(url_for('messages_page'))
 
 
-# Logout
 @app.route('/logout')
 def logout():
+    """
+    Logout
+    """
+
     session.clear()
     flash("You have been logged out.")
     return redirect(url_for('home'))
 
 
 """
-    ----- Error Handling -----
-    The below statements should catch and gracefully handle the majority,
-    if not all, of the errors that could occur
+----- Error Handling -----
+The below statements should catch and gracefully handle the majority,
+if not all, of the errors that could occur
 
 """
 
 
-# Handle Bad Requests
 @app.errorhandler(400)
 def bad_request(e):
+    """
+    Handle Bad Requests
+    """
     return render_template(
         '400.html',
         title="Uh oh! Error: 400",
         error_message=e), 400
 
 
-# Invalid URL
 @app.errorhandler(404)
 def page_not_found(e):
+    """
+    Invalid URL
+    """
     return render_template(
         '404.html',
         title="Uh oh! Error: 404",
         error_message=e), 404
 
 
-# Handle Timeout Errors
 @app.errorhandler(408)
 def request_timeout(e):
+    """
+    Handle Timeout Errors
+    """
     return render_template(
         '408.html',
         title="Uh oh! Error: 408",
         error_message=e), 408
 
 
-# Internal Server Error
 @app.errorhandler(500)
 def internal_server_error(e):
+    """
+    Internal Server Error
+    """
     return render_template(
         '500.html',
         title="Uh oh! Error: 500",
         error_message=e), 500
 
 
-# Handle Method Not Allowed Error
 @app.errorhandler(405)
 def method_not_allowed(e):
+    """
+    Handle Method Not Allowed Error
+    """
     return render_template(
         '405.html',
         title="Uh oh! Error: 405",
         error_message=e), 405
 
 
-# Handle Forbidden Error
 @app.errorhandler(403)
 def forbidden(e):
+    """
+    Handle Forbidden Error
+    """
     return render_template(
         '403.html',
         title="Uh oh! Error: 403",

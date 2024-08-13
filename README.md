@@ -286,12 +286,10 @@ I have implemented the following handlers in order to catch and gracefully redir
 # Technologies Used
 
 - Languages:
-
   - HTML5: HTML was used for the page structure
   - CSS3: Used for styling the website
   - JavaScript: was used sparingly where necassary for additional functionality
   - Python: For handling server side logic of the website
-
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/)
   - Flask is a Python based micro web framework
 - [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
