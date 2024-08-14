@@ -47,6 +47,10 @@ img {
 
 /* Global Styles */
 
+.alert-dismissible .btn-close {
+  padding-top: 0;
+}
+
 .bg-image {
   background-size: cover;
   background-position: center;
