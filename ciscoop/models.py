@@ -28,12 +28,13 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('Post', lazy=True))
     slug = db.Column(db.String(80), unique=True, nullable=False)
+    comments = db.relationship('Comment', backref='post', cascade="all, delete", lazy=True)
 
     def __repr__(self):
         """ return a string representation of the object """
         return '<Post %r>' % self.title
-
-
+    
+    
 class Message(db.Model):
     """ schema for Message model """
     id = db.Column(db.Integer, primary_key=True)
@@ -56,8 +57,7 @@ class Comment(db.Model):
         db.String(), db.ForeignKey('user.username'), nullable=False)
     content = db.Column(db.String(280), unique=False, nullable=False)
     created = db.Column(db.DateTime, server_default=db.func.now())
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    post = db.relationship('Post', backref=db.backref('Comment', lazy=True))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         """ return a string representation of the object """

@@ -401,6 +401,10 @@ else:
     full_name = None
 
 ```
+
+- I found an issue where I was unable to delete blog articles if they had comments on them. This was because the relationship between the appropriate tables for the Cascading Delete fucntionality had not been implemented properly. The following changes to the models.py file resolved the issue:
+  - ![models.py code](documentation/img/cascade-delete-issue.png)
+
 # Deployment and Local Development
 
 ## Deployment to Heroku
