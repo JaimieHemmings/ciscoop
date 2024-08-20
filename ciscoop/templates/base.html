@@ -45,19 +45,23 @@
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="container position-relative">
+          <ul class="flashes">
         {% for message in messages %}
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <div class="container position-relative">
-              {{ message }}
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div>
-          </div>
+            <li>
+                {{ message }}
+            </li>
         {% endfor %}
+          </ul>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
       {% endif %}
     {% endwith %}
     <!-- Include Navbar Template -->

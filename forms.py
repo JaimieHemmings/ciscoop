@@ -39,7 +39,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', [validators.Length(
         min=5, max=50,
         message="Email must be between 5 and 50 characters.")],
-        render_kw={"placeholder": "Your Email"})
+        render_kw={"placeholder": "Your Username"})
 
     password = PasswordField('Password', [validators.Length(
         min=8, max=50,
