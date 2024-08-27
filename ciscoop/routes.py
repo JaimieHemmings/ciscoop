@@ -335,6 +335,11 @@ def admin():
             db.session.commit()
             flash("Post created successfully!")
             return redirect(url_for('admin'))
+        else:
+            if form.errors:
+                for errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{error}")
 
     # Get all blog posts
     all_posts = Post.query.all()
